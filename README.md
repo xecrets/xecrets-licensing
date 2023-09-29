@@ -1,2 +1,2 @@
-# xecrets-file-licensing
-Xecrets File Licensing - JWT License Handling for Xecrets
+# xecrets-licensing
+Xecrets Licensing - JWT Software License Handling
