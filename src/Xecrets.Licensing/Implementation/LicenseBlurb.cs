@@ -70,9 +70,9 @@ namespace Xecrets.Licensing.Implementation
         {
             return status switch
             {
-                LicenseStatus.Gpl => _gplBlurb,
+                LicenseStatus.Gpl => FillLicenseInfo(subscription, _gplBlurb),
 
-                LicenseStatus.Unlicensed => _unlicensedBlurb,
+                LicenseStatus.Unlicensed => FillLicenseInfo(subscription, _unlicensedBlurb),
 
                 LicenseStatus.Expired => FillLicenseInfo(subscription, _expiredBlurb),
 
