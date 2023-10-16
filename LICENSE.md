@@ -9,7 +9,7 @@ We have tried to formulate this agreement in a straight-forward language. If
 there are different interpretations possible under law, the one favoring us in a
 dispute should be used.
 
-The intention is that should have the rights to use the object form of this
+The intention is that you should have the rights to use the object form of this
 software freely as-is as part of any application, but without the right to
 source code or modifications, i.e. closed source freeware. Should you need to
 modify it, contact us instead and we will try to accomodate.
