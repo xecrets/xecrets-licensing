@@ -44,12 +44,21 @@ namespace Xecrets.Licensing.Implementation
         {
             candidateLicense = string.Empty;
             FileInfo fileInfo = new FileInfo(file);
-            if (fileInfo.Length > 1024)
+            if (fileInfo.Length is > 1024 or < 100)
             {
                 return false;
             }
 
-            string fileText = System.IO.File.ReadAllText(file);
+            string fileText;
+            try
+            {
+                fileText = System.IO.File.ReadAllText(file);
+            }
+            catch (IOException)
+            {
+                return false;
+            }
+
             if (IsCandidate(fileText))
             {
                 candidateLicense = fileText;
