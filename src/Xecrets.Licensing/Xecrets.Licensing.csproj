@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -13,7 +12,8 @@
     <Description>Validate JWT licenses</Description>
     <Copyright>Copyright © 2022-2023, Svante Seleborg, All Rights Reserved</Copyright>
     <PackageProjectUrl>https://www.axantum.com/</PackageProjectUrl>
-    <RepositoryType></RepositoryType>
+    <RepositoryType>
+    </RepositoryType>
     <PackageTags>axantum;jwt;licensing</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -23,19 +23,17 @@
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Resources\icon_128x128.png" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="..\..\LICENSE.md">
       <Pack>True</Pack>
@@ -46,16 +44,13 @@
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.0.3" />
   </ItemGroup>
-
   <ItemGroup>
     <Resource Include="Resources\icon_128x128.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </Resource>
   </ItemGroup>
-
 </Project>

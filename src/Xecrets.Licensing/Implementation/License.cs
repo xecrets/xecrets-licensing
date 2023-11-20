@@ -22,36 +22,17 @@ using Xecrets.Licensing.Abstractions;
 namespace Xecrets.Licensing.Implementation
 {
     /// <inheritdoc/>
-    public class License : ILicense
+    /// <summary>
+    /// Instantiate a license
+    /// </summary>
+    /// <param name="newLocator">The <see cref="INewLocator"/> to use.</param>
+    /// <param name="issuer">The issuer, an arbitrary string that should be in the license.</param>
+    /// <param name="claim">The claim, an arbitrary string that should be in the license.</param>
+    /// <param name="publicKeys">The public keys to use to validate the license signature.</param>
+    /// <param name="validProducts">An enumeration of valid values for the claim, i.e. what products are valid.</param>
+    public class License(INewLocator newLocator, string issuer, string claim, IEnumerable<string> publicKeys, IEnumerable<string> validProducts) : ILicense
     {
-        private readonly string _issuer;
-
-        private readonly string _claim;
-
-        private readonly IEnumerable<string> _validProducts;
-
-        private readonly INewLocator _newLocator;
-
-        private readonly IEnumerable<string> _publicKeys;
-
         private LicenseSubscription _subscription = LicenseSubscription.Empty;
-
-        /// <summary>
-        /// Instantiate a license
-        /// </summary>
-        /// <param name="newLocator">The <see cref="INewLocator"/> to use.</param>
-        /// <param name="issuer">The issuer, an arbitrary string that should be in the license.</param>
-        /// <param name="claim">The claim, an arbitrary string that should be in the license.</param>
-        /// <param name="publicKeys">The public keys to use to validate the license signature.</param>
-        /// <param name="validProducts">An enumeration of valid values for the claim, i.e. what products are valid.</param>
-        public License(INewLocator newLocator, string issuer, string claim, IEnumerable<string> publicKeys, IEnumerable<string> validProducts)
-        {
-            _issuer = issuer;
-            _claim = claim;
-            _newLocator = newLocator;
-            _publicKeys = publicKeys;
-            _validProducts = validProducts;
-        }
 
         /// <inheritdoc/>
         public async Task LoadFromAsync(IEnumerable<string> licenseCandidates)
@@ -63,20 +44,20 @@ namespace Xecrets.Licensing.Implementation
         /// <inheritdoc/>
         public async Task<string> GetBestValidLicenseTokenAsync(IEnumerable<string> candidates)
         {
-            candidates = candidates.Where(c => _newLocator.New<ILicenseCandidates>().IsCandidate(c));
+            candidates = candidates.Where(c => newLocator.New<ILicenseCandidates>().IsCandidate(c));
             if (!candidates.Any())
             {
                 return string.Empty;
             }
 
-            List<string> validSignedLicenses = new List<string>();
+            List<string> validSignedLicenses = [];
 
-            foreach (string publicKey in _publicKeys)
+            foreach (string publicKey in publicKeys)
             {
                 await ValidSignedLicenses(publicKey, candidates, validSignedLicenses);
             }
 
-            if (!validSignedLicenses.Any())
+            if (validSignedLicenses.Count == 0)
             {
                 return string.Empty;
             }
@@ -88,9 +69,11 @@ namespace Xecrets.Licensing.Implementation
         /// <inheritdoc/>
         public string LicenseToken { get; private set; } = string.Empty;
 
+        private static readonly string[] validAlgorithms = ["ES256"];
+
         private bool IsExpired(LicenseSubscription licenseSubscription)
         {
-                return _newLocator.New<ILicenseExpiration>().IsExpired(licenseSubscription.ExpirationUtc);
+                return newLocator.New<ILicenseExpiration>().IsExpired(licenseSubscription.ExpirationUtc);
         }
 
         /// <inheritdoc/>
@@ -111,17 +94,16 @@ namespace Xecrets.Licensing.Implementation
             var handler = new JsonWebTokenHandler();
             JsonWebToken token = (JsonWebToken)handler.ReadToken(signedLicense);
 
-            return new LicenseSubscription(token.ValidTo, token.Audiences.First(), token.GetClaim(_claim).Value);
+            return new LicenseSubscription(token.ValidTo, token.Audiences.First(), token.GetClaim(claim).Value);
         }
 
         /// <inheritdoc/>
         public LicenseStatus Status() => Status(_subscription);
 
         /// <inheritdoc/>
-        [SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "Not a good choice for a long chain of conditionals.")]
         public LicenseStatus Status(LicenseSubscription subscription)
         {
-            bool isGplBuild = _newLocator.New<IBuildUtc>().IsGplBuild;
+            bool isGplBuild = newLocator.New<IBuildUtc>().IsGplBuild;
 
             if (!isGplBuild && subscription == LicenseSubscription.Empty)
             {
@@ -133,7 +115,7 @@ namespace Xecrets.Licensing.Implementation
                 return LicenseStatus.Expired;
             }
 
-            if (_validProducts.Contains(subscription.Product) && !IsExpired(subscription))
+            if (validProducts.Contains(subscription.Product) && !IsExpired(subscription))
             {
                 return LicenseStatus.Valid;
             }
@@ -158,9 +140,9 @@ namespace Xecrets.Licensing.Implementation
                 TokenValidationResult result = await handler.ValidateTokenAsync(trimmedCandidate, new TokenValidationParameters
                 {
                     ValidateAudience = false,
-                    ValidIssuer = _issuer,
+                    ValidIssuer = issuer,
                     IssuerSigningKey = new ECDsaSecurityKey(testKey),
-                    ValidAlgorithms = new string[] { "ES256" },
+                    ValidAlgorithms = validAlgorithms,
                     ValidateLifetime = false,
                 });
 

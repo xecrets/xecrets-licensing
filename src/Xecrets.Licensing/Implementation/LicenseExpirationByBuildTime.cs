@@ -20,23 +20,16 @@ namespace Xecrets.Licensing.Implementation
     /// <summary>
     /// An <see cref="ILicenseExpiration"/> implementation comparing the license with date and time of the build.
     /// </summary>
-    public class LicenseExpirationByBuildTime : ILicenseExpiration
+    /// <remarks>
+    /// Instantiate an instance providing a locator
+    /// </remarks>
+    /// <param name="newLocator">The <see cref="INewLocator"/> to use to get dependencies.</param>
+    public class LicenseExpirationByBuildTime(INewLocator newLocator) : ILicenseExpiration
     {
-        private readonly INewLocator _newLocator;
-
-        /// <summary>
-        /// Instantiate an instance providing a locator
-        /// </summary>
-        /// <param name="newLocator">The <see cref="INewLocator"/> to use to get dependencies.</param>
-        public LicenseExpirationByBuildTime(INewLocator newLocator)
-        {
-            _newLocator = newLocator;
-        }
-
         /// <inheritdoc/>
         public bool IsExpired(DateTime expiresUtc)
         {
-                string buildUtcText = _newLocator.New<IBuildUtc>().BuildUtcText;
+                string buildUtcText = newLocator.New<IBuildUtc>().BuildUtcText;
                 DateTime buildUtc = DateTime.Parse(buildUtcText, CultureInfo.GetCultureInfo("en-US")).ToUniversalTime();
                 return expiresUtc < buildUtc;
         }

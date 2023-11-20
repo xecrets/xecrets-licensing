@@ -19,14 +19,14 @@ namespace Xecrets.Licensing.Implementation
 {
     /// <summary>
     /// Check files and strings if the could be a license candidate by way of heuristics. The purpose is to
-    /// speed things up and determine actions without the need to actually attemt to validate a license.
+    /// speed things up and determine actions without the need to actually attempt to validate a license.
     /// </summary>
     public partial class LicenseCandidates : ILicenseCandidates
     {
         /// <inheritdoc/>
         public IEnumerable<string> CandidatesFromFiles(IEnumerable<string> files)
         {
-            List<string> candidateLicenses = new List<string>();
+            List<string> candidateLicenses = [];
 
             foreach (string file in files)
             {

@@ -20,43 +20,27 @@ namespace Xecrets.Licensing.Implementation
     /// <summary>
     /// Create appropriate license message blurbs depending on the license situation.
     /// </summary>
-    public class LicenseBlurb
+    /// <remarks>
+    /// Create an instance of the LicenseBlurb class, providing text templates. Where appropriate, use the following placeholders:
+    /// Literal "\n" - will be replaced by the appropriate new line for the environment
+    /// {licensee} - will be replaced by the licensee from the license.
+    /// {expiration} - will be replaced by the license expiration in en-US formatting
+    /// {product} - will be replaced by the product the license is valid for.
+    /// /// </remarks>
+    /// <param name="newLocator">A reference to a <see cref="INewLocator"/> to locate dependencies.</param>
+    /// <param name="gplBlurb">A text template for a GPL license.</param>
+    /// <param name="unlicensedBlurb">A text template for the case when there is no license.</param>
+    /// <param name="expiredBlurb">A text template for the case when a previously valid license has expired.</param>
+    /// <param name="licensedBlurb">A text template for the case when the license is valid.</param>
+    /// <param name="invalidBlurb">A text template for the case when the license is not valid for this product.</param>
+    public class LicenseBlurb(INewLocator newLocator, string gplBlurb, string unlicensedBlurb, string expiredBlurb, string licensedBlurb, string invalidBlurb)
     {
-        private readonly INewLocator _newLocator;
-        private readonly string _gplBlurb;
-        private readonly string _unlicensedBlurb;
-        private readonly string _expiredBlurb;
-        private readonly string _licensedBlurb;
-        private readonly string _invalidBlurb;
-
-        /// <summary>
-        /// Create an instance of the LicenseBlurb class, providing text templates. Where appropriate, use the following placeholders:
-        /// Literal "\n" - will be replaced by the appropriate new line for the environment
-        /// {licensee} - will be replaced by the licensee from the license.
-        /// {expiration} - will be replaced by the license expiration in en-US formatting
-        /// {product} - will be replaced by the product the license is valid for.
-        /// /// </summary>
-        /// <param name="newLocator">A reference to a <see cref="INewLocator"/> to locate dependencies.</param>
-        /// <param name="gplBlurb">A text template for a GPL license.</param>
-        /// <param name="unlicensedBlurb">A text template for the case when there is no license.</param>
-        /// <param name="expiredBlurb">A text template for the case when a previously valid license has expired.</param>
-        /// <param name="licensedBlurb">A text template for the case when the license is valid.</param>
-        /// <param name="invalidBlurb">A text template for the case when the license is not valid for this product.</param>
-        public LicenseBlurb(INewLocator newLocator, string gplBlurb, string unlicensedBlurb, string expiredBlurb, string licensedBlurb, string invalidBlurb)
-        {
-            _newLocator = newLocator;
-            _gplBlurb = gplBlurb;
-            _unlicensedBlurb = unlicensedBlurb;
-            _expiredBlurb = expiredBlurb;
-            _licensedBlurb = licensedBlurb;
-            _invalidBlurb = invalidBlurb;
-        }
 
         /// <summary>
         /// Get the appropriate license blurb for the current license loaded via <see cref="ILicense"/>
         /// </summary>
         /// <returns>An appropriate string.</returns>
-        public override string ToString() => ToString(_newLocator.New<ILicense>().Status(), _newLocator.New<ILicense>().Subscription());
+        public override string ToString() => ToString(newLocator.New<ILicense>().Status(), newLocator.New<ILicense>().Subscription());
 
         /// <summary>
         /// Get the appropriate license blurb for the provided <see cref="LicenseStatus"/> and <see cref="LicenseSubscription"/>
@@ -70,15 +54,15 @@ namespace Xecrets.Licensing.Implementation
         {
             return status switch
             {
-                LicenseStatus.Gpl => FillLicenseInfo(subscription, _gplBlurb),
+                LicenseStatus.Gpl => FillLicenseInfo(subscription, gplBlurb),
 
-                LicenseStatus.Unlicensed => FillLicenseInfo(subscription, _unlicensedBlurb),
+                LicenseStatus.Unlicensed => FillLicenseInfo(subscription, unlicensedBlurb),
 
-                LicenseStatus.Expired => FillLicenseInfo(subscription, _expiredBlurb),
+                LicenseStatus.Expired => FillLicenseInfo(subscription, expiredBlurb),
 
-                LicenseStatus.Valid => FillLicenseInfo(subscription, _licensedBlurb),
+                LicenseStatus.Valid => FillLicenseInfo(subscription, licensedBlurb),
 
-                LicenseStatus.Invalid => FillLicenseInfo(subscription, _invalidBlurb),
+                LicenseStatus.Invalid => FillLicenseInfo(subscription, invalidBlurb),
 
                 _ => throw new InvalidOperationException($"Unexpected {nameof(LicenseStatus)} value '{status}'."),
             };
