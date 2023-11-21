@@ -30,7 +30,7 @@ namespace Xecrets.Licensing.Implementation
         public bool IsExpired(DateTime expiresUtc)
         {
                 string buildUtcText = newLocator.New<IBuildUtc>().BuildUtcText;
-                DateTime buildUtc = DateTime.Parse(buildUtcText, CultureInfo.GetCultureInfo("en-US")).ToUniversalTime();
+                DateTime buildUtc = DateTime.Parse(buildUtcText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeUniversal).ToUniversalTime();
                 return expiresUtc < buildUtc;
         }
     }

@@ -50,20 +50,20 @@ namespace Xecrets.Licensing.Implementation
                 return string.Empty;
             }
 
-            List<string> validSignedLicenses = [];
+            List<string> validSignatureLicenses = [];
 
             foreach (string publicKey in publicKeys)
             {
-                await ValidSignedLicenses(publicKey, candidates, validSignedLicenses);
+                await ValidSignatureLicenses(publicKey, candidates, validSignatureLicenses);
             }
 
-            if (validSignedLicenses.Count == 0)
+            if (validSignatureLicenses.Count == 0)
             {
                 return string.Empty;
             }
 
             var handler = new JsonWebTokenHandler();
-            return validSignedLicenses.OrderByDescending(l => handler.ReadToken(l).ValidTo).First();
+            return validSignatureLicenses.OrderByDescending(l => handler.ReadToken(l).ValidTo).First();
         }
 
         /// <inheritdoc/>
@@ -128,7 +128,14 @@ namespace Xecrets.Licensing.Implementation
             return LicenseStatus.Invalid;
         }
 
-        private async Task ValidSignedLicenses(string keyPem, IEnumerable<string> candidates, List<string> validSignedLicenses)
+        /// <summary>
+        /// Get licenses with valid signatures. They may still be expired, or invalid for this product.
+        /// </summary>
+        /// <param name="keyPem"></param>
+        /// <param name="candidates"></param>
+        /// <param name="validSignedLicenses"></param>
+        /// <returns></returns>
+        private async Task ValidSignatureLicenses(string keyPem, IEnumerable<string> candidates, List<string> validSignedLicenses)
         {
             JsonWebTokenHandler handler = new JsonWebTokenHandler();
             var testKey = ECDsa.Create();
