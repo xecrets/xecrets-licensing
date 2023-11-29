@@ -19,6 +19,16 @@ namespace Xecrets.Licensing.Abstractions
     public interface IBuildUtc
     {
         /// <summary>
+        /// Return <see langword="true"/> if this is a debug build
+        /// </summary>
+        bool IsDebugBuild { get; }
+
+        /// <summary>
+        /// Return <see langword="true"/> if this is a beta build
+        /// </summary>
+        bool IsBetaBuild { get; }
+
+        /// <summary>
         /// Return <see langword="true"/> if this is a GPL build
         /// </summary>
         bool IsGplBuild { get; }

@@ -46,7 +46,19 @@ namespace Xecrets.Licensing.Implementation
             _assemblyBuildUtcText = GetAssemblyBuildUtcText();
             IsGplBuild = _assemblyBuildUtcText == UseExecutableDateTime;
             BuildUtcText = GetBuildUtcText();
+            IsBetaBuild = _assembly.GetCustomAttribute<AssemblyTitleAttribute>()?.Title.Contains("BETA") ?? false;
         }
+
+        /// <inheritdoc/>
+        public bool IsDebugBuild =>
+#if DEBUG
+            true;
+#else
+            false;
+#endif
+
+        /// <inheritdoc/>
+        public bool IsBetaBuild { get; }
 
         /// <inheritdoc/>
         public string BuildUtcText { get; }
