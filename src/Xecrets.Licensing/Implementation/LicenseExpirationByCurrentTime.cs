@@ -18,12 +18,12 @@ namespace Xecrets.Licensing.Implementation
     /// <summary>
     /// An <see cref="ILicenseExpiration"/> implementation comparing the license with the current date and time.
     /// </summary>
-    public class LicenseExpirationByCurrentTime : ILicenseExpiration
+    public class LicenseExpirationByCurrentTime(TimeProvider timeProvider) : ILicenseExpiration
     {
         /// <inheritdoc/>
         public bool IsExpired(DateTime expiresUtc)
         {
-            return expiresUtc < DateTime.UtcNow;
+            return expiresUtc < timeProvider.GetUtcNow().DateTime;
         }
     }
 }
