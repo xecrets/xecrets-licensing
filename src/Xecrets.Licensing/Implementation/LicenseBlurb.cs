@@ -72,7 +72,7 @@ namespace Xecrets.Licensing.Implementation
         {
             return text
                 .Replace("{licensee}", subscription.Licensee)
-                .Replace("{expiration}", subscription.ExpirationUtc.ToString(CultureInfo.GetCultureInfo("en-US")))
+                .Replace("{expiration}", subscription.ExpirationUtc.ToLocal())
                 .Replace("{product}", subscription.Product)
                 .Replace(@"\n", Environment.NewLine);
         }

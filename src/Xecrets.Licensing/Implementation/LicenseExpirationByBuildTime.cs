@@ -11,8 +11,6 @@
 
 #endregion Coypright and License
 
-using System.Globalization;
-
 using Xecrets.Licensing.Abstractions;
 
 namespace Xecrets.Licensing.Implementation
@@ -29,9 +27,9 @@ namespace Xecrets.Licensing.Implementation
         /// <inheritdoc/>
         public bool IsExpired(DateTime expiresUtc)
         {
-                string buildUtcText = newLocator.New<IBuildUtc>().BuildUtcText;
-                DateTime buildUtc = DateTime.Parse(buildUtcText, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeUniversal).ToUniversalTime();
-                return expiresUtc < buildUtc;
+            string buildUtcText = newLocator.New<IBuildUtc>().BuildUtcText;
+            DateTime buildUtc = buildUtcText.FromUtc();
+            return expiresUtc < buildUtc;
         }
     }
 }
