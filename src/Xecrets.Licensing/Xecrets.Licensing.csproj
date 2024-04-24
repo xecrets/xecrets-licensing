@@ -11,7 +11,7 @@
     <Authors>Axantum Software AB, Svante Seleborg</Authors>
     <Company>Axantum Software AB</Company>
     <Description>Validate JWT licenses</Description>
-    <Copyright>Copyright © 2022-2023, Svante Seleborg, All Rights Reserved</Copyright>
+    <Copyright>Copyright © 2022-2024, Svante Seleborg, All Rights Reserved</Copyright>
     <PackageProjectUrl>https://www.axantum.com/</PackageProjectUrl>
     <RepositoryType>
     </RepositoryType>

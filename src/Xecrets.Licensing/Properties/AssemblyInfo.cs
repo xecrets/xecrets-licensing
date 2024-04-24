@@ -1,7 +1,7 @@
 ﻿#region Coypright and License
 
 /*
- * Xecrets Licensing - Copyright © 2022-2023, Svante Seleborg, All Rights Reserved.
+ * Xecrets Licensing - Copyright © 2022-2024, Svante Seleborg, All Rights Reserved.
  *
  * This code file is part of Xecrets Licensing
  * 
@@ -18,15 +18,15 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Xecrets Licensing BETA")]
-[assembly: AssemblyDescription("A cross platform Sdk to use Xecrets File Cli programmatically")]
+[assembly: AssemblyDescription("A cross platform package for JWT software license handling")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
 [assembly: AssemblyCompany("Axantum Software AB")]
-[assembly: AssemblyProduct("Xecrets File Sdk")]
-[assembly: AssemblyCopyright("Xecrets File Sdk is Copyright © 2022-2023 Svante Seleborg, All Rights Reserved")]
+[assembly: AssemblyProduct("Xecrets Licensing")]
+[assembly: AssemblyCopyright("Copyright © 2022-2024 Svante Seleborg, All Rights Reserved")]
 [assembly: AssemblyTrademark("Xecrets is a trademark of Axantum Software AB")]
 [assembly: AssemblyCulture("")]
 
@@ -36,7 +36,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bb5c1cf0-e6c8-4d0d-bd5d-a5b11fb08a3a")]
+[assembly: Guid("968c8022-0e2d-4a93-b4f7-0e71fc5c9861")]
 
 // Version information for an assembly consists of the following four values:
 //
