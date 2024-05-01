@@ -94,7 +94,7 @@ namespace Xecrets.Licensing.Implementation
             var handler = new JsonWebTokenHandler();
             JsonWebToken token = (JsonWebToken)handler.ReadToken(signedLicense);
 
-            return new LicenseSubscription(token.ValidTo, token.Audiences.First(), token.GetClaim(claim).Value);
+            return new LicenseSubscription(DateTime.SpecifyKind(token.ValidTo, DateTimeKind.Utc), token.Audiences.First(), token.GetClaim(claim).Value);
         }
 
         /// <inheritdoc/>
