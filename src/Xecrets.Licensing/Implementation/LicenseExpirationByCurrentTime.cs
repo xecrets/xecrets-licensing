@@ -23,7 +23,7 @@ namespace Xecrets.Licensing.Implementation
         /// <inheritdoc/>
         public bool IsExpired(DateTime expiresUtc)
         {
-            return expiresUtc < timeProvider.GetUtcNow().DateTime;
+            return expiresUtc < timeProvider.GetUtcNow().UtcDateTime;
         }
     }
 }
