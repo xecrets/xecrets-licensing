@@ -71,7 +71,7 @@ namespace Xecrets.Licensing.Implementation
         /// <inheritdoc/>
         public bool IsCandidate(string? candidate)
         {
-            candidate = candidate?.Trim();
+            candidate = candidate?.Trim().ReplaceLineEndings(string.Empty);
             return !string.IsNullOrEmpty(candidate) && candidate.Length < 1024 && _jwtRegex.IsMatch(candidate);
         }
 

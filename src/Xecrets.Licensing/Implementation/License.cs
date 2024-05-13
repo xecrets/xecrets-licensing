@@ -143,7 +143,7 @@ namespace Xecrets.Licensing.Implementation
 
             foreach (string candidate in candidates)
             {
-                string trimmedCandidate = candidate.Trim();
+                string trimmedCandidate = candidate.Trim().ReplaceLineEndings(string.Empty);
                 TokenValidationResult result = await handler.ValidateTokenAsync(trimmedCandidate, new TokenValidationParameters
                 {
                     ValidateAudience = false,
