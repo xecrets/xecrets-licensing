@@ -27,7 +27,7 @@ namespace Xecrets.Licensing
         /// <returns></returns>
         public static DateTime FromUtc(this string utcDateTime)
         {
-            return DateTime.Parse(utcDateTime, CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+            return DateTime.Parse(utcDateTime, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
         }
 
         /// <summary>

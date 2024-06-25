@@ -24,7 +24,7 @@ namespace Xecrets.Licensing.Implementation
     /// Create an instance of the LicenseBlurb class, providing text templates. Where appropriate, use the following placeholders:
     /// Literal "\n" - will be replaced by the appropriate new line for the environment
     /// {licensee} - will be replaced by the licensee from the license.
-    /// {expiration} - will be replaced by the license expiration in en-US formatting
+    /// {expiration} - will be replaced by the license expiration in InvariantCulture formatting
     /// {product} - will be replaced by the product the license is valid for.
     /// /// </remarks>
     /// <param name="newLocator">A reference to a <see cref="INewLocator"/> to locate dependencies.</param>

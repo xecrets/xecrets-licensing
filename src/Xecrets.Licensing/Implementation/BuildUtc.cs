@@ -72,7 +72,7 @@ namespace Xecrets.Licensing.Implementation
             {
                 string name = Path.Combine(System.AppContext.BaseDirectory, _assembly.GetName().Name ?? throw new InvalidOperationException("Unexpected null assembly name."));
                 name += System.IO.File.Exists(name + ".exe") ? ".exe" : (System.IO.File.Exists(name + ".dll") ? ".dll" : string.Empty);
-                string dateTime = System.IO.File.GetLastWriteTimeUtc(name).ToString(CultureInfo.GetCultureInfo("en-US"));
+                string dateTime = System.IO.File.GetLastWriteTimeUtc(name).ToString(CultureInfo.InvariantCulture);
                 return dateTime;
             }
 
