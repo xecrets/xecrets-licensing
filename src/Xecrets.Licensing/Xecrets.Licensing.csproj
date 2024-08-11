@@ -8,7 +8,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Xecrets License validation</Title>
-    <Version>1.0.0</Version>
+    <Version>2.3.0</Version>
     <Authors>Axantum Software AB, Svante Seleborg</Authors>
     <Company>Axantum Software AB</Company>
     <Description>Validate JWT licenses</Description>
@@ -18,8 +18,8 @@
     </RepositoryType>
     <PackageTags>axantum;jwt;licensing</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
+    <AssemblyVersion>2.3.0.0</AssemblyVersion>
+    <FileVersion>2.3.0.0</FileVersion>
     <PackageIcon>icon_128x128.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
@@ -28,10 +28,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <WarningLevel>9999</WarningLevel>
+    <IsTrimmable>True</IsTrimmable>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <WarningLevel>9999</WarningLevel>
+    <IsTrimmable>True</IsTrimmable>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Resources\icon_128x128.png" />
