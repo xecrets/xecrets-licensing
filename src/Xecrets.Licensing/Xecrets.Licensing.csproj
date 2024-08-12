@@ -7,11 +7,11 @@
     <Nullable>enable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Xecrets License validation</Title>
-    <Version>2.3.0</Version>
+    <Title>Xecrets Licensing BETA</Title>
+    <Version>2.3.0-beta</Version>
     <Authors>Axantum Software AB, Svante Seleborg</Authors>
     <Company>Axantum Software AB</Company>
-    <Description>Validate JWT licenses</Description>
+    <Description>A cross platform package for JWT software license handling</Description>
     <Copyright>Copyright © 2022-2024, Svante Seleborg, All Rights Reserved</Copyright>
     <PackageProjectUrl>https://www.axantum.com/</PackageProjectUrl>
     <RepositoryType>
