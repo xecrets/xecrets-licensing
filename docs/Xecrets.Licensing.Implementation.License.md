@@ -19,7 +19,8 @@ Implements [ILicense](Xecrets.Licensing.Abstractions.ILicense.md 'Xecrets.Licens
 
 ## License.LicenseToken Property
 
-The raw license token string that was loaded, [LoadFromAsync(IEnumerable&lt;string&gt;)](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable_string_) 'Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable<string>)')
+The raw license token string that was loaded, [LoadFromAsync(IEnumerable&lt;string&gt;)](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable_string_) 'Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable<string>)'), or an empty  
+string.
 
 ```csharp
 public string LicenseToken { get; set; }
@@ -35,16 +36,17 @@ Implements [LicenseToken](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Lic
 
 ## License.GetBestValidLicenseTokenAsync(IEnumerable<string>) Method
 
-Determine the best license from a list of candidates.
+Determine the best license from a list of candidates. What is the best license is determined by the  
+implementation.
 
 ```csharp
-public System.Threading.Tasks.Task<string> GetBestValidLicenseTokenAsync(System.Collections.Generic.IEnumerable<string> candidates);
+public System.Threading.Tasks.Task<string> GetBestValidLicenseTokenAsync(System.Collections.Generic.IEnumerable<string> licenseTokenCandidates);
 ```
 #### Parameters
 
-<a name='Xecrets.Licensing.Implementation.License.GetBestValidLicenseTokenAsync(System.Collections.Generic.IEnumerable_string_).candidates'></a>
+<a name='Xecrets.Licensing.Implementation.License.GetBestValidLicenseTokenAsync(System.Collections.Generic.IEnumerable_string_).licenseTokenCandidates'></a>
 
-`candidates` [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
+`licenseTokenCandidates` [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
 
 The list of license candidates.
 
@@ -52,22 +54,23 @@ Implements [GetBestValidLicenseTokenAsync(IEnumerable&lt;string&gt;)](Xecrets.Li
 
 #### Returns
 [System.Threading.Tasks.Task&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task-1 'System.Threading.Tasks.Task`1')[System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task-1 'System.Threading.Tasks.Task`1')  
-The best license token string, or an empty string
+The best license token string, or an empty string if no candidate was valid.
 
 <a name='Xecrets.Licensing.Implementation.License.LoadFromAsync(System.Collections.Generic.IEnumerable_string_)'></a>
 
 ## License.LoadFromAsync(IEnumerable<string>) Method
 
-Load the best license from a list of candidates.
+Load the best license from a list of candidates. What is the best license is determined by the implementation.  
+If no license is found, the [LicenseToken](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.LicenseToken 'Xecrets.Licensing.Abstractions.ILicense.LicenseToken') will be an empty string.
 
 ```csharp
-public System.Threading.Tasks.Task LoadFromAsync(System.Collections.Generic.IEnumerable<string> licenseCandidates);
+public System.Threading.Tasks.Task LoadFromAsync(System.Collections.Generic.IEnumerable<string> licenseTokenCandidates);
 ```
 #### Parameters
 
-<a name='Xecrets.Licensing.Implementation.License.LoadFromAsync(System.Collections.Generic.IEnumerable_string_).licenseCandidates'></a>
+<a name='Xecrets.Licensing.Implementation.License.LoadFromAsync(System.Collections.Generic.IEnumerable_string_).licenseTokenCandidates'></a>
 
-`licenseCandidates` [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
+`licenseTokenCandidates` [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
 
 The list of license candidates.
 
@@ -81,7 +84,7 @@ A waitable [System.Threading.Tasks.Task](https://docs.microsoft.com/en-us/dotnet
 
 ## License.Status() Method
 
-The [LicenseStatus](Xecrets.Licensing.Abstractions.md#Xecrets.Licensing.Abstractions.LicenseStatus 'Xecrets.Licensing.Abstractions.LicenseStatus') of the loaded license, [LoadFromAsync(IEnumerable&lt;string&gt;)](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable_string_) 'Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable<string>)')
+The [LicenseStatus](Xecrets.Licensing.Abstractions.LicenseStatus.md 'Xecrets.Licensing.Abstractions.LicenseStatus') of the loaded license, [LoadFromAsync(IEnumerable&lt;string&gt;)](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable_string_) 'Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable<string>)')
 
 ```csharp
 public Xecrets.Licensing.Abstractions.LicenseStatus Status();
@@ -90,14 +93,14 @@ public Xecrets.Licensing.Abstractions.LicenseStatus Status();
 Implements [Status()](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.Status() 'Xecrets.Licensing.Abstractions.ILicense.Status()')
 
 #### Returns
-[LicenseStatus](Xecrets.Licensing.Abstractions.md#Xecrets.Licensing.Abstractions.LicenseStatus 'Xecrets.Licensing.Abstractions.LicenseStatus')  
-The loaded [LicenseStatus](Xecrets.Licensing.Abstractions.md#Xecrets.Licensing.Abstractions.LicenseStatus 'Xecrets.Licensing.Abstractions.LicenseStatus').
+[LicenseStatus](Xecrets.Licensing.Abstractions.LicenseStatus.md 'Xecrets.Licensing.Abstractions.LicenseStatus')  
+The loaded [LicenseStatus](Xecrets.Licensing.Abstractions.LicenseStatus.md 'Xecrets.Licensing.Abstractions.LicenseStatus').
 
 <a name='Xecrets.Licensing.Implementation.License.Status(Xecrets.Licensing.Implementation.LicenseSubscription)'></a>
 
 ## License.Status(LicenseSubscription) Method
 
-A [LicenseStatus](Xecrets.Licensing.Abstractions.md#Xecrets.Licensing.Abstractions.LicenseStatus 'Xecrets.Licensing.Abstractions.LicenseStatus') from the [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription')
+A [LicenseStatus](Xecrets.Licensing.Abstractions.LicenseStatus.md 'Xecrets.Licensing.Abstractions.LicenseStatus') from the [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription')
 
 ```csharp
 public Xecrets.Licensing.Abstractions.LicenseStatus Status(Xecrets.Licensing.Implementation.LicenseSubscription subscription);
@@ -113,14 +116,15 @@ A [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 
 Implements [Status(LicenseSubscription)](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.Status(Xecrets.Licensing.Implementation.LicenseSubscription) 'Xecrets.Licensing.Abstractions.ILicense.Status(Xecrets.Licensing.Implementation.LicenseSubscription)')
 
 #### Returns
-[LicenseStatus](Xecrets.Licensing.Abstractions.md#Xecrets.Licensing.Abstractions.LicenseStatus 'Xecrets.Licensing.Abstractions.LicenseStatus')  
-A [LicenseStatus](Xecrets.Licensing.Abstractions.md#Xecrets.Licensing.Abstractions.LicenseStatus 'Xecrets.Licensing.Abstractions.LicenseStatus')
+[LicenseStatus](Xecrets.Licensing.Abstractions.LicenseStatus.md 'Xecrets.Licensing.Abstractions.LicenseStatus')  
+A [LicenseStatus](Xecrets.Licensing.Abstractions.LicenseStatus.md 'Xecrets.Licensing.Abstractions.LicenseStatus')
 
 <a name='Xecrets.Licensing.Implementation.License.Subscription()'></a>
 
 ## License.Subscription() Method
 
-The [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription') that was loaded, [LoadFromAsync(IEnumerable&lt;string&gt;)](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable_string_) 'Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable<string>)')
+The [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription') that was loaded, [LoadFromAsync(IEnumerable&lt;string&gt;)](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable_string_) 'Xecrets.Licensing.Abstractions.ILicense.LoadFromAsync(System.Collections.Generic.IEnumerable<string>)') or  
+[Empty](Xecrets.Licensing.Implementation.LicenseSubscription.md#Xecrets.Licensing.Implementation.LicenseSubscription.Empty 'Xecrets.Licensing.Implementation.LicenseSubscription.Empty') .
 
 ```csharp
 public Xecrets.Licensing.Implementation.LicenseSubscription Subscription();
@@ -129,7 +133,8 @@ public Xecrets.Licensing.Implementation.LicenseSubscription Subscription();
 Implements [Subscription()](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.Subscription() 'Xecrets.Licensing.Abstractions.ILicense.Subscription()')
 
 #### Returns
-[LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription')
+[LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription')  
+The [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription').
 
 <a name='Xecrets.Licensing.Implementation.License.Subscription(string)'></a>
 
@@ -146,36 +151,34 @@ public Xecrets.Licensing.Implementation.LicenseSubscription Subscription(string 
 
 `signedLicense` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
 
-The raw signed license token string, it's assumed it is a proper token
-
 Implements [Subscription(string)](Xecrets.Licensing.Abstractions.ILicense.md#Xecrets.Licensing.Abstractions.ILicense.Subscription(string) 'Xecrets.Licensing.Abstractions.ILicense.Subscription(string)')
 
 #### Returns
 [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription')  
-The [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription') or an empty if the [signedLicense](Xecrets.Licensing.Implementation.License.md#Xecrets.Licensing.Implementation.License.Subscription(string).signedLicense 'Xecrets.Licensing.Implementation.License.Subscription(string).signedLicense') was an empty string.
+The [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription') or [Empty](Xecrets.Licensing.Implementation.LicenseSubscription.md#Xecrets.Licensing.Implementation.LicenseSubscription.Empty 'Xecrets.Licensing.Implementation.LicenseSubscription.Empty') if the licenseToken was an empty string.
 
-<a name='Xecrets.Licensing.Implementation.License.ValidSignatureLicenses(string,System.Collections.Generic.IEnumerable_string_,System.Collections.Generic.List_string_)'></a>
+<a name='Xecrets.Licensing.Implementation.License.ValidLicenseTokens(string,System.Collections.Generic.IEnumerable_string_,System.Collections.Generic.List_string_)'></a>
 
-## License.ValidSignatureLicenses(string, IEnumerable<string>, List<string>) Method
+## License.ValidLicenseTokens(string, IEnumerable<string>, List<string>) Method
 
 Get licenses with valid signatures. They may still be expired, or invalid for this product.
 
 ```csharp
-private System.Threading.Tasks.Task ValidSignatureLicenses(string keyPem, System.Collections.Generic.IEnumerable<string> candidates, System.Collections.Generic.List<string> validSignedLicenses);
+private System.Threading.Tasks.Task ValidLicenseTokens(string publicKeyPem, System.Collections.Generic.IEnumerable<string> licenseTokenCandidates, System.Collections.Generic.List<string> validLicenseTokens);
 ```
 #### Parameters
 
-<a name='Xecrets.Licensing.Implementation.License.ValidSignatureLicenses(string,System.Collections.Generic.IEnumerable_string_,System.Collections.Generic.List_string_).keyPem'></a>
+<a name='Xecrets.Licensing.Implementation.License.ValidLicenseTokens(string,System.Collections.Generic.IEnumerable_string_,System.Collections.Generic.List_string_).publicKeyPem'></a>
 
-`keyPem` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
+`publicKeyPem` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
 
-<a name='Xecrets.Licensing.Implementation.License.ValidSignatureLicenses(string,System.Collections.Generic.IEnumerable_string_,System.Collections.Generic.List_string_).candidates'></a>
+<a name='Xecrets.Licensing.Implementation.License.ValidLicenseTokens(string,System.Collections.Generic.IEnumerable_string_,System.Collections.Generic.List_string_).licenseTokenCandidates'></a>
 
-`candidates` [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
+`licenseTokenCandidates` [System.Collections.Generic.IEnumerable&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')[System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1 'System.Collections.Generic.IEnumerable`1')
 
-<a name='Xecrets.Licensing.Implementation.License.ValidSignatureLicenses(string,System.Collections.Generic.IEnumerable_string_,System.Collections.Generic.List_string_).validSignedLicenses'></a>
+<a name='Xecrets.Licensing.Implementation.License.ValidLicenseTokens(string,System.Collections.Generic.IEnumerable_string_,System.Collections.Generic.List_string_).validLicenseTokens'></a>
 
-`validSignedLicenses` [System.Collections.Generic.List&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1 'System.Collections.Generic.List`1')[System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1 'System.Collections.Generic.List`1')
+`validLicenseTokens` [System.Collections.Generic.List&lt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1 'System.Collections.Generic.List`1')[System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')[&gt;](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1 'System.Collections.Generic.List`1')
 
 #### Returns
 [System.Threading.Tasks.Task](https://docs.microsoft.com/en-us/dotnet/api/System.Threading.Tasks.Task 'System.Threading.Tasks.Task')

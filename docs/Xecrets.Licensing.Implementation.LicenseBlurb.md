@@ -3,7 +3,7 @@
 
 ## LicenseBlurb Class
 
-Create appropriate license message blurbs depending on the license situation.
+A helper to create appropriate license message blurbs depending on the license situation.
 
 ```csharp
 public class LicenseBlurb
@@ -12,19 +12,19 @@ public class LicenseBlurb
 Inheritance [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.Object 'System.Object') &#129106; LicenseBlurb
 
 ### Remarks
-Create an instance of the LicenseBlurb class, providing text templates. Where appropriate, use the following placeholders:  
-Literal "\n" - will be replaced by the appropriate new line for the environment  
+Create an instance of the LicenseBlurb class, providing text templates. Where appropriate, use the following  
+placeholders:  
+Literal "\n" - will be replaced by the appropriate new line for the environment.  
 {licensee} - will be replaced by the licensee from the license.  
-{expiration} - will be replaced by the license expiration in InvariantCulture formatting  
-{product} - will be replaced by the product the license is valid for.  
-///
+{expiration} - will be replaced by the license expiration in InvariantCulture formatting.  
+{product} - will be replaced by the product the license is valid for.
 ### Constructors
 
 <a name='Xecrets.Licensing.Implementation.LicenseBlurb.LicenseBlurb(Xecrets.Licensing.Abstractions.INewLocator,string,string,string,string,string)'></a>
 
 ## LicenseBlurb(INewLocator, string, string, string, string, string) Constructor
 
-Create appropriate license message blurbs depending on the license situation.
+A helper to create appropriate license message blurbs depending on the license situation.
 
 ```csharp
 public LicenseBlurb(Xecrets.Licensing.Abstractions.INewLocator newLocator, string gplBlurb, string unlicensedBlurb, string expiredBlurb, string licensedBlurb, string invalidBlurb);
@@ -68,12 +68,12 @@ A text template for the case when the license is valid.
 A text template for the case when the license is not valid for this product.
 
 ### Remarks
-Create an instance of the LicenseBlurb class, providing text templates. Where appropriate, use the following placeholders:  
-Literal "\n" - will be replaced by the appropriate new line for the environment  
+Create an instance of the LicenseBlurb class, providing text templates. Where appropriate, use the following  
+placeholders:  
+Literal "\n" - will be replaced by the appropriate new line for the environment.  
 {licensee} - will be replaced by the licensee from the license.  
-{expiration} - will be replaced by the license expiration in InvariantCulture formatting  
-{product} - will be replaced by the product the license is valid for.  
-///
+{expiration} - will be replaced by the license expiration in InvariantCulture formatting.  
+{product} - will be replaced by the product the license is valid for.
 ### Methods
 
 <a name='Xecrets.Licensing.Implementation.LicenseBlurb.ToString()'></a>
@@ -94,7 +94,7 @@ An appropriate string.
 
 ## LicenseBlurb.ToString(LicenseStatus, LicenseSubscription) Method
 
-Get the appropriate license blurb for the provided [LicenseStatus](Xecrets.Licensing.Abstractions.md#Xecrets.Licensing.Abstractions.LicenseStatus 'Xecrets.Licensing.Abstractions.LicenseStatus') and [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription')
+Get the appropriate license blurb for the provided [LicenseStatus](Xecrets.Licensing.Abstractions.LicenseStatus.md 'Xecrets.Licensing.Abstractions.LicenseStatus') and [LicenseSubscription](Xecrets.Licensing.Implementation.LicenseSubscription.md 'Xecrets.Licensing.Implementation.LicenseSubscription')
 
 ```csharp
 public virtual string ToString(Xecrets.Licensing.Abstractions.LicenseStatus status, Xecrets.Licensing.Implementation.LicenseSubscription subscription);
@@ -103,7 +103,7 @@ public virtual string ToString(Xecrets.Licensing.Abstractions.LicenseStatus stat
 
 <a name='Xecrets.Licensing.Implementation.LicenseBlurb.ToString(Xecrets.Licensing.Abstractions.LicenseStatus,Xecrets.Licensing.Implementation.LicenseSubscription).status'></a>
 
-`status` [LicenseStatus](Xecrets.Licensing.Abstractions.md#Xecrets.Licensing.Abstractions.LicenseStatus 'Xecrets.Licensing.Abstractions.LicenseStatus')
+`status` [LicenseStatus](Xecrets.Licensing.Abstractions.LicenseStatus.md 'Xecrets.Licensing.Abstractions.LicenseStatus')
 
 The status
 

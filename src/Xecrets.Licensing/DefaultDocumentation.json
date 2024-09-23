@@ -8,6 +8,6 @@
     "**/platforms"
   ],
   "OutputDirectoryPath": "../../docs",
-  "GeneratedPages": "Namespaces,Classes,Interfaces",
+  "GeneratedPages": "Namespaces,Classes,Interfaces,Enums",
   "LogLevel": "Warn"
 }

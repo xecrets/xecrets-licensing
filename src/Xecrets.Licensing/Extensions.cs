@@ -38,30 +38,30 @@ internal static class NamespaceDoc { }
 public static class Extensions
 {
     /// <summary>
-    /// Convert a UTC string to a <see cref="DateTime"/> in UTC.
+    /// Convert a culture invariant UTC string to a <see cref="DateTime"/> in UTC.
     /// </summary>
     /// <param name="utcDateTime"></param>
-    /// <returns></returns>
+    /// <returns>A <see cref="System.DateTime"/> as a UTC date and time.</returns>
     public static DateTime FromUtc(this string utcDateTime)
     {
         return DateTime.Parse(utcDateTime, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
     }
 
     /// <summary>
-    /// Convert a UTC <see cref="DateTime"/> to a string in local format.
+    /// Convert a UTC <see cref="DateTime"/> to a local time string in current UI culture format.
     /// </summary>
     /// <param name="utcDateTime"></param>
-    /// <returns></returns>
+    /// <returns>A string with the local time in current UI culture format.</returns>
     public static string ToLocal(this DateTime utcDateTime)
     {
         return utcDateTime.ToLocalTime().ToString("G", CultureInfo.CurrentUICulture);
     }
 
     /// <summary>
-    /// Convert a UTC string to a local string.
+    /// Convert a culture invariant UTC string to a local time string in current UI culture format.
     /// </summary>
     /// <param name="utcDateTime"></param>
-    /// <returns></returns>
+    /// <returns>A string with the local time in current UI culture format.</returns>
     public static string ToLocal(this string utcDateTime)
     {
         return utcDateTime.FromUtc().ToLocal();

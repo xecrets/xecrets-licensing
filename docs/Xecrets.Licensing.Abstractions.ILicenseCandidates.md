@@ -3,8 +3,8 @@
 
 ## ILicenseCandidates Interface
 
-Methods to determine what might be a license, and to deterimine if in fact a candidate   
-is a license.
+Methods to determine what might be a license. It is only a heuristic, and not a guarante, typically implemented by  
+length and pattern matching what could be a JWT license token, but not necessarily a valid one.
 
 ```csharp
 public interface ILicenseCandidates
@@ -18,7 +18,7 @@ Derived
 
 ## ILicenseCandidates.CandidatesFromFiles(IEnumerable<string>) Method
 
-Inspect files and determine by heuristics if they are likely to be a license or not.
+Inspect file contents and determine by heuristics if they are likely to be a license or not.
 
 ```csharp
 System.Collections.Generic.IEnumerable<string> CandidatesFromFiles(System.Collections.Generic.IEnumerable<string> files);
@@ -39,16 +39,16 @@ An enumeration of possible candidates (not necessarily actual licenses).
 
 ## ILicenseCandidates.IsCandidate(string) Method
 
-Test if a provided string is a license candidate
+Test if a provided string is a license candidate.
 
 ```csharp
-bool IsCandidate(string? candidate);
+bool IsCandidate(string? candidateLicenseToken);
 ```
 #### Parameters
 
-<a name='Xecrets.Licensing.Abstractions.ILicenseCandidates.IsCandidate(string).candidate'></a>
+<a name='Xecrets.Licensing.Abstractions.ILicenseCandidates.IsCandidate(string).candidateLicenseToken'></a>
 
-`candidate` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
+`candidateLicenseToken` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
 
 The candidate string to test.
 
@@ -60,10 +60,10 @@ The candidate string to test.
 
 ## ILicenseCandidates.TryCandidateFile(string, string) Method
 
-Test and if so, extract the license string from a file.
+Test and if it appears to be likely candidate, extract the license string from a file.
 
 ```csharp
-bool TryCandidateFile(string file, out string candidateLicense);
+bool TryCandidateFile(string file, out string candidateLicenseToken);
 ```
 #### Parameters
 
@@ -73,9 +73,9 @@ bool TryCandidateFile(string file, out string candidateLicense);
 
 The file to check.
 
-<a name='Xecrets.Licensing.Abstractions.ILicenseCandidates.TryCandidateFile(string,string).candidateLicense'></a>
+<a name='Xecrets.Licensing.Abstractions.ILicenseCandidates.TryCandidateFile(string,string).candidateLicenseToken'></a>
 
-`candidateLicense` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
+`candidateLicenseToken` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
 
 The license candidate, or an empty string.
 

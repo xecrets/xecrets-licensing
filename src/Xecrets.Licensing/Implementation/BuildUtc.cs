@@ -31,14 +31,18 @@ using Xecrets.Licensing.Abstractions;
 namespace Xecrets.Licensing.Implementation;
 
 /// <summary>
-/// An <see cref="IBuildUtc"/> implementation using assembly meta data, like:
-/// [assembly: AssemblyMetadata("BuildUtc", "[Build DateTime]")]
-/// The value can also be "UseExecutableDateTime" in which case we'll use the time stamp
-/// of the executable instead, and also consider this a GPL build.
+/// An <see cref="IBuildUtc"/> implementation using assembly meta data, like: [assembly: AssemblyMetadata("BuildUtc",
+/// "[Build DateTime]")] The value can also be "UseExecutableDateTime" in which case we'll use the time stamp of the
+/// executable file instead, and also consider this a GPL build. The idea is that a CI build process will replace the
+/// "UseExecutableDateTime" placeholder value of the BuildUtc attribute with the actual build time, thus enabling a
+/// nicely directly buildable open source project, while still being able to perform internal builds with a specific
+/// build time.
 /// </summary>
 /// <remarks>
-/// As a fallback for testing, if the value is "UseExecutableDateTime", a check is made
-/// for environment variable XF_BUILDUTC, and if it's set, that value is used instead.
+/// The <see cref="AssemblyTitleAttribute"/> is also inspected to determine if the build is a beta build. If it contains
+/// the word "BETA" it's considered a beta build. Also here the expectation is that a CI build would remove the "BETA"
+/// from the title for a release build. As a fallback for testing, if the value is "UseExecutableDateTime", a check is
+/// made for environment variable XF_BUILDUTC, and if it's set, that value is used instead.
 /// </remarks>
 public class BuildUtc : IBuildUtc
 {

@@ -17,7 +17,7 @@ Derived
 
 ## IBuildUtc.BuildUtcText Property
 
-Return a string representation of the build time, or what should be considered the build time.
+Return a culture invariant string representation of the build time, or what should be considered the build time.
 
 ```csharp
 string BuildUtcText { get; }
@@ -30,7 +30,8 @@ string BuildUtcText { get; }
 
 ## IBuildUtc.IsBetaBuild Property
 
-Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a beta build
+Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a beta build. Exactly how this is determined is decided by the  
+implementation.
 
 ```csharp
 bool IsBetaBuild { get; }
@@ -43,7 +44,8 @@ bool IsBetaBuild { get; }
 
 ## IBuildUtc.IsDebugBuild Property
 
-Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a debug build
+Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a debug build. Exactly how this is determined is decided by the  
+implementation.
 
 ```csharp
 bool IsDebugBuild { get; }
@@ -56,7 +58,8 @@ bool IsDebugBuild { get; }
 
 ## IBuildUtc.IsGplBuild Property
 
-Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a GPL build
+Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a GPL build, depending on the implementation it may signify any type of  
+open source license, making the licensing irrelevant for the build.
 
 ```csharp
 bool IsGplBuild { get; }

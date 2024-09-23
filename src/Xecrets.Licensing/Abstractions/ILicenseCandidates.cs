@@ -26,30 +26,30 @@
 namespace Xecrets.Licensing.Abstractions;
 
 /// <summary>
-/// Methods to determine what might be a license, and to deterimine if in fact a candidate 
-/// is a license.
+/// Methods to determine what might be a license. It is only a heuristic, and not a guarante, typically implemented by
+/// length and pattern matching what could be a JWT license token, but not necessarily a valid one.
 /// </summary>
 public interface ILicenseCandidates
 {
     /// <summary>
-    /// Inspect files and determine by heuristics if they are likely to be a license or not.
+    /// Inspect file contents and determine by heuristics if they are likely to be a license or not.
     /// </summary>
     /// <param name="files">An enumeration of full path names to files to check.</param>
     /// <returns>An enumeration of possible candidates (not necessarily actual licenses).</returns>
     IEnumerable<string> CandidatesFromFiles(IEnumerable<string> files);
 
     /// <summary>
-    /// Test and if so, extract the license string from a file.
+    /// Test and if it appears to be likely candidate, extract the license string from a file.
     /// </summary>
     /// <param name="file">The file to check.</param>
-    /// <param name="candidateLicense">The license candidate, or an empty string.</param>
+    /// <param name="candidateLicenseToken">The license candidate, or an empty string.</param>
     /// <returns><see langword="true"/> if a license candidate is returned, otherwise <see langword="false"/>.</returns>
-    bool TryCandidateFile(string file, out string candidateLicense);
+    bool TryCandidateFile(string file, out string candidateLicenseToken);
 
     /// <summary>
-    /// Test if a provided string is a license candidate
+    /// Test if a provided string is a license candidate.
     /// </summary>
-    /// <param name="candidate">The candidate string to test.</param>
+    /// <param name="candidateLicenseToken">The candidate string to test.</param>
     /// <returns><see langword="true"/> if it is a license candidate, otherwise <see langword="false"/>.</returns>
-    bool IsCandidate(string? candidate);
+    bool IsCandidate(string? candidateLicenseToken);
 }

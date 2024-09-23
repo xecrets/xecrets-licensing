@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{680AFEA7-8
 		..\docs\Xecrets.Licensing.Abstractions.ILicenseCandidates.md = ..\docs\Xecrets.Licensing.Abstractions.ILicenseCandidates.md
 		..\docs\Xecrets.Licensing.Abstractions.ILicenseExpiration.md = ..\docs\Xecrets.Licensing.Abstractions.ILicenseExpiration.md
 		..\docs\Xecrets.Licensing.Abstractions.INewLocator.md = ..\docs\Xecrets.Licensing.Abstractions.INewLocator.md
+		..\docs\Xecrets.Licensing.Abstractions.LicenseStatus.md = ..\docs\Xecrets.Licensing.Abstractions.LicenseStatus.md
 		..\docs\Xecrets.Licensing.Abstractions.md = ..\docs\Xecrets.Licensing.Abstractions.md
 		..\docs\Xecrets.Licensing.Extensions.md = ..\docs\Xecrets.Licensing.Extensions.md
 		..\docs\Xecrets.Licensing.Implementation.BuildUtc.md = ..\docs\Xecrets.Licensing.Implementation.BuildUtc.md

@@ -43,7 +43,8 @@ Instantiate an instance providing a locator
 
 ## LicenseExpirationByBuildTime.IsExpired(DateTime) Method
 
-Check if the license has expired
+Check if the license has expired, as determined by comparing the build time with the expiration time.  
+The build time is determined by the [IBuildUtc](Xecrets.Licensing.Abstractions.IBuildUtc.md 'Xecrets.Licensing.Abstractions.IBuildUtc') implementation.
 
 ```csharp
 public bool IsExpired(System.DateTime expiresUtc);

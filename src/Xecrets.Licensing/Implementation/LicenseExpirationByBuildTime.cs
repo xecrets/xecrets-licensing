@@ -36,7 +36,12 @@ namespace Xecrets.Licensing.Implementation;
 /// <param name="newLocator">The <see cref="INewLocator"/> to use to get dependencies.</param>
 public class LicenseExpirationByBuildTime(INewLocator newLocator) : ILicenseExpiration
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Check if the license has expired, as determined by comparing the build time with the expiration time.
+    /// The build time is determined by the <see cref="IBuildUtc"/> implementation.
+    /// </summary>
+    /// <param name="expiresUtc">The date and time when it expires.</param>
+    /// <returns><see langword="true"/> if the license is determined to have expired.</returns>
     public bool IsExpired(DateTime expiresUtc)
     {
         string buildUtcText = newLocator.New<IBuildUtc>().BuildUtcText;

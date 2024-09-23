@@ -20,7 +20,7 @@ Implements [ILicenseCandidates](Xecrets.Licensing.Abstractions.ILicenseCandidate
 
 ## LicenseCandidates.CandidatesFromFiles(IEnumerable<string>) Method
 
-Inspect files and determine by heuristics if they are likely to be a license or not.
+Inspect file contents and determine by heuristics if they are likely to be a license or not.
 
 ```csharp
 public System.Collections.Generic.IEnumerable<string> CandidatesFromFiles(System.Collections.Generic.IEnumerable<string> files);
@@ -43,7 +43,7 @@ An enumeration of possible candidates (not necessarily actual licenses).
 
 ## LicenseCandidates.IsCandidate(string) Method
 
-Test if a provided string is a license candidate
+Test if a provided string is a license candidate.
 
 ```csharp
 public bool IsCandidate(string? candidate);
@@ -53,8 +53,6 @@ public bool IsCandidate(string? candidate);
 <a name='Xecrets.Licensing.Implementation.LicenseCandidates.IsCandidate(string).candidate'></a>
 
 `candidate` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
-
-The candidate string to test.
 
 Implements [IsCandidate(string)](Xecrets.Licensing.Abstractions.ILicenseCandidates.md#Xecrets.Licensing.Abstractions.ILicenseCandidates.IsCandidate(string) 'Xecrets.Licensing.Abstractions.ILicenseCandidates.IsCandidate(string)')
 
@@ -100,10 +98,10 @@ Explanation:<br/>
 
 ## LicenseCandidates.TryCandidateFile(string, string) Method
 
-Test and if so, extract the license string from a file.
+Test and if it appears to be likely candidate, extract the license string from a file.
 
 ```csharp
-public bool TryCandidateFile(string file, out string candidateLicense);
+public bool TryCandidateFile(string file, out string candidateLicenseToken);
 ```
 #### Parameters
 
@@ -113,9 +111,9 @@ public bool TryCandidateFile(string file, out string candidateLicense);
 
 The file to check.
 
-<a name='Xecrets.Licensing.Implementation.LicenseCandidates.TryCandidateFile(string,string).candidateLicense'></a>
+<a name='Xecrets.Licensing.Implementation.LicenseCandidates.TryCandidateFile(string,string).candidateLicenseToken'></a>
 
-`candidateLicense` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
+`candidateLicenseToken` [System.String](https://docs.microsoft.com/en-us/dotnet/api/System.String 'System.String')
 
 The license candidate, or an empty string.
 

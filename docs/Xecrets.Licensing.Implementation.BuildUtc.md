@@ -3,10 +3,12 @@
 
 ## BuildUtc Class
 
-An [IBuildUtc](Xecrets.Licensing.Abstractions.IBuildUtc.md 'Xecrets.Licensing.Abstractions.IBuildUtc') implementation using assembly meta data, like:  
-[assembly: AssemblyMetadata("BuildUtc", "[Build DateTime]")]  
-The value can also be "UseExecutableDateTime" in which case we'll use the time stamp  
-of the executable instead, and also consider this a GPL build.
+An [IBuildUtc](Xecrets.Licensing.Abstractions.IBuildUtc.md 'Xecrets.Licensing.Abstractions.IBuildUtc') implementation using assembly meta data, like: [assembly: AssemblyMetadata("BuildUtc",  
+"[Build DateTime]")] The value can also be "UseExecutableDateTime" in which case we'll use the time stamp of the  
+executable file instead, and also consider this a GPL build. The idea is that a CI build process will replace the  
+"UseExecutableDateTime" placeholder value of the BuildUtc attribute with the actual build time, thus enabling a  
+nicely directly buildable open source project, while still being able to perform internal builds with a specific  
+build time.
 
 ```csharp
 public class BuildUtc :
@@ -18,8 +20,10 @@ Inheritance [System.Object](https://docs.microsoft.com/en-us/dotnet/api/System.O
 Implements [IBuildUtc](Xecrets.Licensing.Abstractions.IBuildUtc.md 'Xecrets.Licensing.Abstractions.IBuildUtc')
 
 ### Remarks
-As a fallback for testing, if the value is "UseExecutableDateTime", a check is made  
-for environment variable XF_BUILDUTC, and if it's set, that value is used instead.
+The [System.Reflection.AssemblyTitleAttribute](https://docs.microsoft.com/en-us/dotnet/api/System.Reflection.AssemblyTitleAttribute 'System.Reflection.AssemblyTitleAttribute') is also inspected to determine if the build is a beta build. If it contains  
+the word "BETA" it's considered a beta build. Also here the expectation is that a CI build would remove the "BETA"  
+from the title for a release build. As a fallback for testing, if the value is "UseExecutableDateTime", a check is  
+made for environment variable XF_BUILDUTC, and if it's set, that value is used instead.
 ### Constructors
 
 <a name='Xecrets.Licensing.Implementation.BuildUtc.BuildUtc(System.Type)'></a>
@@ -44,7 +48,7 @@ A type from the assembly to consider the exectuable.
 
 ## BuildUtc.BuildUtcText Property
 
-Return a string representation of the build time, or what should be considered the build time.
+Return a culture invariant string representation of the build time, or what should be considered the build time.
 
 ```csharp
 public string BuildUtcText { get; }
@@ -59,7 +63,8 @@ Implements [BuildUtcText](Xecrets.Licensing.Abstractions.IBuildUtc.md#Xecrets.Li
 
 ## BuildUtc.IsBetaBuild Property
 
-Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a beta build
+Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a beta build. Exactly how this is determined is decided by the  
+implementation.
 
 ```csharp
 public bool IsBetaBuild { get; }
@@ -74,7 +79,8 @@ Implements [IsBetaBuild](Xecrets.Licensing.Abstractions.IBuildUtc.md#Xecrets.Lic
 
 ## BuildUtc.IsDebugBuild Property
 
-Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a debug build
+Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a debug build. Exactly how this is determined is decided by the  
+implementation.
 
 ```csharp
 public bool IsDebugBuild { get; }
@@ -89,7 +95,8 @@ Implements [IsDebugBuild](Xecrets.Licensing.Abstractions.IBuildUtc.md#Xecrets.Li
 
 ## BuildUtc.IsGplBuild Property
 
-Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a GPL build
+Return [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool') if this is a GPL build, depending on the implementation it may signify any type of  
+open source license, making the licensing irrelevant for the build.
 
 ```csharp
 public bool IsGplBuild { get; }

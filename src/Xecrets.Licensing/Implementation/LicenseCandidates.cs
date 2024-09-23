@@ -38,23 +38,23 @@ public partial class LicenseCandidates : ILicenseCandidates
     /// <inheritdoc/>
     public IEnumerable<string> CandidatesFromFiles(IEnumerable<string> files)
     {
-        List<string> candidateLicenses = [];
+        List<string> candidateLicenseTokens = [];
 
         foreach (string file in files)
         {
-            if (TryCandidateFile(file, out string candidateLicense))
+            if (TryCandidateFile(file, out string candidateLicenseToken))
             {
-                candidateLicenses.Add(candidateLicense);
+                candidateLicenseTokens.Add(candidateLicenseToken);
             }
         }
 
-        return candidateLicenses;
+        return candidateLicenseTokens;
     }
 
     /// <inheritdoc/>
-    public bool TryCandidateFile(string file, out string candidateLicense)
+    public bool TryCandidateFile(string file, out string candidateLicenseToken)
     {
-        candidateLicense = string.Empty;
+        candidateLicenseToken = string.Empty;
         FileInfo fileInfo = new FileInfo(file);
         if (fileInfo.Length is > 1024 or < 100)
         {
@@ -73,7 +73,7 @@ public partial class LicenseCandidates : ILicenseCandidates
 
         if (IsCandidate(fileText))
         {
-            candidateLicense = fileText;
+            candidateLicenseToken = fileText;
             return true;
         }
 

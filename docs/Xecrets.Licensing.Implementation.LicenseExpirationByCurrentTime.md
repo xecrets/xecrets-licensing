@@ -35,7 +35,8 @@ public LicenseExpirationByCurrentTime(System.TimeProvider timeProvider);
 
 ## LicenseExpirationByCurrentTime.IsExpired(DateTime) Method
 
-Check if the license has expired
+Check if the license has expired, as determined by comparing the build time with the current time.  
+The current time is determined by the [System.TimeProvider](https://docs.microsoft.com/en-us/dotnet/api/System.TimeProvider 'System.TimeProvider') implementation.
 
 ```csharp
 public bool IsExpired(System.DateTime expiresUtc);

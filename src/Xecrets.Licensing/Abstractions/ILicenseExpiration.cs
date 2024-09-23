@@ -32,7 +32,7 @@ namespace Xecrets.Licensing.Abstractions;
 public interface ILicenseExpiration
 {
     /// <summary>
-    /// Check if the license has expired
+    /// Check if the license has expired.
     /// </summary>
     /// <param name="expiresUtc">The date and time when it expires.</param>
     /// <returns><see langword="true"/> if the license is determined to have expired.</returns>

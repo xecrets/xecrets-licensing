@@ -28,15 +28,16 @@ using Xecrets.Licensing.Abstractions;
 namespace Xecrets.Licensing.Implementation;
 
 /// <summary>
-/// Create appropriate license message blurbs depending on the license situation.
+/// A helper to create appropriate license message blurbs depending on the license situation.
 /// </summary>
 /// <remarks>
-/// Create an instance of the LicenseBlurb class, providing text templates. Where appropriate, use the following placeholders:
-/// Literal "\n" - will be replaced by the appropriate new line for the environment
+/// Create an instance of the LicenseBlurb class, providing text templates. Where appropriate, use the following
+/// placeholders:
+/// Literal "\n" - will be replaced by the appropriate new line for the environment.
 /// {licensee} - will be replaced by the licensee from the license.
-/// {expiration} - will be replaced by the license expiration in InvariantCulture formatting
+/// {expiration} - will be replaced by the license expiration in InvariantCulture formatting.
 /// {product} - will be replaced by the product the license is valid for.
-/// /// </remarks>
+/// </remarks>
 /// <param name="newLocator">A reference to a <see cref="INewLocator"/> to locate dependencies.</param>
 /// <param name="gplBlurb">A text template for a GPL license.</param>
 /// <param name="unlicensedBlurb">A text template for the case when there is no license.</param>
@@ -45,12 +46,12 @@ namespace Xecrets.Licensing.Implementation;
 /// <param name="invalidBlurb">A text template for the case when the license is not valid for this product.</param>
 public class LicenseBlurb(INewLocator newLocator, string gplBlurb, string unlicensedBlurb, string expiredBlurb, string licensedBlurb, string invalidBlurb)
 {
-
     /// <summary>
     /// Get the appropriate license blurb for the current license loaded via <see cref="ILicense"/>
     /// </summary>
     /// <returns>An appropriate string.</returns>
-    public override string ToString() => ToString(newLocator.New<ILicense>().Status(), newLocator.New<ILicense>().Subscription());
+    public override string ToString() =>
+        ToString(newLocator.New<ILicense>().Status(), newLocator.New<ILicense>().Subscription());
 
     /// <summary>
     /// Get the appropriate license blurb for the provided <see cref="LicenseStatus"/> and <see cref="LicenseSubscription"/>

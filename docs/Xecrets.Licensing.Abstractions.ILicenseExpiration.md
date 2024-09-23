@@ -19,7 +19,7 @@ Derived
 
 ## ILicenseExpiration.IsExpired(DateTime) Method
 
-Check if the license has expired
+Check if the license has expired.
 
 ```csharp
 bool IsExpired(System.DateTime expiresUtc);

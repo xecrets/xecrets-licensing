@@ -45,42 +45,42 @@ internal static class NamespaceDoc { }
 /// <param name="newLocator">The <see cref="INewLocator"/> to use.</param>
 /// <param name="issuer">The issuer, an arbitrary string that should be in the license.</param>
 /// <param name="claim">The claim, an arbitrary string that should be in the license.</param>
-/// <param name="publicKeys">The public keys to use to validate the license signature.</param>
+/// <param name="publicKeyPems">The public key pems to use to validate the license signature.</param>
 /// <param name="validProducts">An enumeration of valid values for the claim, i.e. what products are valid.</param>
-public class License(INewLocator newLocator, string issuer, string claim, IEnumerable<string> publicKeys, IEnumerable<string> validProducts) : ILicense
+public class License(INewLocator newLocator, string issuer, string claim, IEnumerable<string> publicKeyPems, IEnumerable<string> validProducts) : ILicense
 {
     private LicenseSubscription _subscription = LicenseSubscription.Empty;
 
     /// <inheritdoc/>
-    public async Task LoadFromAsync(IEnumerable<string> licenseCandidates)
+    public async Task LoadFromAsync(IEnumerable<string> licenseTokenCandidates)
     {
-        LicenseToken = await GetBestValidLicenseTokenAsync(licenseCandidates);
+        LicenseToken = await GetBestValidLicenseTokenAsync(licenseTokenCandidates);
         _subscription = Subscription(LicenseToken);
     }
 
     /// <inheritdoc/>
-    public async Task<string> GetBestValidLicenseTokenAsync(IEnumerable<string> candidates)
+    public async Task<string> GetBestValidLicenseTokenAsync(IEnumerable<string> licenseTokenCandidates)
     {
-        candidates = candidates.Where(c => newLocator.New<ILicenseCandidates>().IsCandidate(c));
-        if (!candidates.Any())
+        licenseTokenCandidates = licenseTokenCandidates.Where(c => newLocator.New<ILicenseCandidates>().IsCandidate(c));
+        if (!licenseTokenCandidates.Any())
         {
             return string.Empty;
         }
 
-        List<string> validSignatureLicenses = [];
+        List<string> validLicenseTokens = [];
 
-        foreach (string publicKey in publicKeys)
+        foreach (string publicKeyPem in publicKeyPems)
         {
-            await ValidSignatureLicenses(publicKey, candidates, validSignatureLicenses);
+            await ValidLicenseTokens(publicKeyPem, licenseTokenCandidates, validLicenseTokens);
         }
 
-        if (validSignatureLicenses.Count == 0)
+        if (validLicenseTokens.Count == 0)
         {
             return string.Empty;
         }
 
         var handler = new JsonWebTokenHandler();
-        return validSignatureLicenses.OrderByDescending(l => handler.ReadToken(l).ValidTo).First();
+        return validLicenseTokens.OrderByDescending(l => handler.ReadToken(l).ValidTo).First();
     }
 
     /// <inheritdoc/>
@@ -148,31 +148,31 @@ public class License(INewLocator newLocator, string issuer, string claim, IEnume
     /// <summary>
     /// Get licenses with valid signatures. They may still be expired, or invalid for this product.
     /// </summary>
-    /// <param name="keyPem"></param>
-    /// <param name="candidates"></param>
-    /// <param name="validSignedLicenses"></param>
+    /// <param name="publicKeyPem"></param>
+    /// <param name="licenseTokenCandidates"></param>
+    /// <param name="validLicenseTokens"></param>
     /// <returns></returns>
-    private async Task ValidSignatureLicenses(string keyPem, IEnumerable<string> candidates, List<string> validSignedLicenses)
+    private async Task ValidLicenseTokens(string publicKeyPem, IEnumerable<string> licenseTokenCandidates, List<string> validLicenseTokens)
     {
         JsonWebTokenHandler handler = new JsonWebTokenHandler();
-        var testKey = ECDsa.Create();
-        testKey.ImportFromPem(keyPem);
+        var ecdsa = ECDsa.Create();
+        ecdsa.ImportFromPem(publicKeyPem);
 
-        foreach (string candidate in candidates)
+        foreach (string tokenCandidate in licenseTokenCandidates)
         {
-            string trimmedCandidate = candidate.Trim().ReplaceLineEndings(string.Empty);
-            TokenValidationResult result = await handler.ValidateTokenAsync(trimmedCandidate, new TokenValidationParameters
+            string trimmedTokenCandidate = tokenCandidate.Trim().ReplaceLineEndings(string.Empty);
+            TokenValidationResult result = await handler.ValidateTokenAsync(trimmedTokenCandidate, new TokenValidationParameters
             {
                 ValidateAudience = false,
                 ValidIssuer = issuer,
-                IssuerSigningKey = new ECDsaSecurityKey(testKey),
+                IssuerSigningKey = new ECDsaSecurityKey(ecdsa),
                 ValidAlgorithms = validAlgorithms,
                 ValidateLifetime = false,
             });
 
             if (result.IsValid)
             {
-                validSignedLicenses.Add(trimmedCandidate);
+                validLicenseTokens.Add(trimmedTokenCandidate);
             }
         }
     }

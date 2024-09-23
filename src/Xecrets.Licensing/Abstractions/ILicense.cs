@@ -40,36 +40,43 @@ internal static class NamespaceDoc { }
 public interface ILicense
 {
     /// <summary>
-    /// Load the best license from a list of candidates.
+    /// Load the best license from a list of candidates. What is the best license is determined by the implementation.
+    /// If no license is found, the <see cref="LicenseToken"/> will be an empty string.
     /// </summary>
-    /// <param name="licenseCandidates">The list of license candidates.</param>
+    /// <param name="licenseTokenCandidates">The list of license candidates.</param>
     /// <returns>A waitable <see cref="Task"/></returns>
-    Task LoadFromAsync(IEnumerable<string> licenseCandidates);
+    Task LoadFromAsync(IEnumerable<string> licenseTokenCandidates);
 
     /// <summary>
-    /// Determine the best license from a list of candidates.
+    /// Determine the best license from a list of candidates. What is the best license is determined by the
+    /// implementation.
     /// </summary>
-    /// <param name="candidates">The list of license candidates.</param>
-    /// <returns>The best license token string, or an empty string</returns>
-    Task<string> GetBestValidLicenseTokenAsync(IEnumerable<string> candidates);
+    /// <param name="licenseTokenCandidates">The list of license candidates.</param>
+    /// <returns>The best license token string, or an empty string if no candidate was valid.</returns>
+    Task<string> GetBestValidLicenseTokenAsync(IEnumerable<string> licenseTokenCandidates);
 
     /// <summary>
-    /// The raw license token string that was loaded, <see cref="LoadFromAsync(IEnumerable{string})"/>
+    /// The raw license token string that was loaded, <see cref="LoadFromAsync(IEnumerable{string})"/>, or an empty
+    /// string.
     /// </summary>
     string LicenseToken { get; }
 
     /// <summary>
-    /// The <see cref="LicenseSubscription"/> that was loaded, <see cref="LoadFromAsync(IEnumerable{string})"/>
+    /// The <see cref="LicenseSubscription"/> that was loaded, <see cref="LoadFromAsync(IEnumerable{string})"/> or
+    /// <see cref="LicenseSubscription.Empty"/> .
     /// </summary>
-    /// <returns></returns>
+    /// <returns>The <see cref="LicenseSubscription"/>.</returns>
     LicenseSubscription Subscription();
 
     /// <summary>
     /// A <see cref="LicenseSubscription"/> instantiated by interpreting a raw license token string
     /// </summary>
-    /// <param name="signedLicense">The raw signed license token string, it's assumed it is a proper token</param>
-    /// <returns>The <see cref="LicenseSubscription"/> or an empty if the <paramref name="signedLicense"/> was an empty string.</returns>
-    LicenseSubscription Subscription(string signedLicense);
+    /// <param name="licenseToken">The raw signed license token string, it's assumed it is a proper token</param>
+    /// <returns>
+    /// The <see cref="LicenseSubscription"/> or <see cref="LicenseSubscription.Empty"/> if the <paramref
+    /// name="licenseToken"/> was an empty string.
+    /// </returns>
+    LicenseSubscription Subscription(string licenseToken);
     
     /// <summary>
     /// The <see cref="LicenseStatus"/> of the loaded license, <see cref="LoadFromAsync(IEnumerable{string})"/>

@@ -31,22 +31,25 @@ namespace Xecrets.Licensing.Abstractions;
 public interface IBuildUtc
 {
     /// <summary>
-    /// Return <see langword="true"/> if this is a debug build
+    /// Return <see langword="true"/> if this is a debug build. Exactly how this is determined is decided by the
+    /// implementation.
     /// </summary>
     bool IsDebugBuild { get; }
 
     /// <summary>
-    /// Return <see langword="true"/> if this is a beta build
+    /// Return <see langword="true"/> if this is a beta build. Exactly how this is determined is decided by the
+    /// implementation.
     /// </summary>
     bool IsBetaBuild { get; }
 
     /// <summary>
-    /// Return <see langword="true"/> if this is a GPL build
+    /// Return <see langword="true"/> if this is a GPL build, depending on the implementation it may signify any type of
+    /// open source license, making the licensing irrelevant for the build.
     /// </summary>
     bool IsGplBuild { get; }
 
     /// <summary>
-    /// Return a string representation of the build time, or what should be considered the build time.
+    /// Return a culture invariant string representation of the build time, or what should be considered the build time.
     /// </summary>
     string BuildUtcText { get; }
 }

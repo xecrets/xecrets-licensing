@@ -32,7 +32,12 @@ namespace Xecrets.Licensing.Implementation;
 /// </summary>
 public class LicenseExpirationByCurrentTime(TimeProvider timeProvider) : ILicenseExpiration
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Check if the license has expired, as determined by comparing the build time with the current time.
+    /// The current time is determined by the <see cref="TimeProvider"/> implementation.
+    /// </summary>
+    /// <param name="expiresUtc">The date and time when it expires.</param>
+    /// <returns><see langword="true"/> if the license is determined to have expired.</returns>
     public bool IsExpired(DateTime expiresUtc)
     {
         return expiresUtc < timeProvider.GetUtcNow().UtcDateTime;
