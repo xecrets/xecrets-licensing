@@ -10,8 +10,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		..\.editorconfig = ..\.editorconfig
 		..\.gitignore = ..\.gitignore
 		global.json = global.json
-		..\LICENSE.md = ..\LICENSE.md
-		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{680AFEA7-8B80-4256-9A31-EB8891C09A45}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\index.md = ..\docs\index.md
+		..\docs\Xecrets.Licensing.Abstractions.IBuildUtc.md = ..\docs\Xecrets.Licensing.Abstractions.IBuildUtc.md
+		..\docs\Xecrets.Licensing.Abstractions.ILicense.md = ..\docs\Xecrets.Licensing.Abstractions.ILicense.md
+		..\docs\Xecrets.Licensing.Abstractions.ILicenseCandidates.md = ..\docs\Xecrets.Licensing.Abstractions.ILicenseCandidates.md
+		..\docs\Xecrets.Licensing.Abstractions.ILicenseExpiration.md = ..\docs\Xecrets.Licensing.Abstractions.ILicenseExpiration.md
+		..\docs\Xecrets.Licensing.Abstractions.INewLocator.md = ..\docs\Xecrets.Licensing.Abstractions.INewLocator.md
+		..\docs\Xecrets.Licensing.Abstractions.md = ..\docs\Xecrets.Licensing.Abstractions.md
+		..\docs\Xecrets.Licensing.Extensions.md = ..\docs\Xecrets.Licensing.Extensions.md
+		..\docs\Xecrets.Licensing.Implementation.BuildUtc.md = ..\docs\Xecrets.Licensing.Implementation.BuildUtc.md
+		..\docs\Xecrets.Licensing.Implementation.License.md = ..\docs\Xecrets.Licensing.Implementation.License.md
+		..\docs\Xecrets.Licensing.Implementation.LicenseBlurb.md = ..\docs\Xecrets.Licensing.Implementation.LicenseBlurb.md
+		..\docs\Xecrets.Licensing.Implementation.LicenseCandidates.md = ..\docs\Xecrets.Licensing.Implementation.LicenseCandidates.md
+		..\docs\Xecrets.Licensing.Implementation.LicenseExpirationByBuildTime.md = ..\docs\Xecrets.Licensing.Implementation.LicenseExpirationByBuildTime.md
+		..\docs\Xecrets.Licensing.Implementation.LicenseExpirationByCurrentTime.md = ..\docs\Xecrets.Licensing.Implementation.LicenseExpirationByCurrentTime.md
+		..\docs\Xecrets.Licensing.Implementation.LicenseSubscription.md = ..\docs\Xecrets.Licensing.Implementation.LicenseSubscription.md
+		..\docs\Xecrets.Licensing.Implementation.md = ..\docs\Xecrets.Licensing.Implementation.md
+		..\docs\Xecrets.Licensing.md = ..\docs\Xecrets.Licensing.md
 	EndProjectSection
 EndProject
 Global
@@ -27,6 +46,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{680AFEA7-8B80-4256-9A31-EB8891C09A45} = {4B9C5033-E804-426D-901F-2B0AE85CD678}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47A4205B-7BE5-4CD0-AFC7-9619FB04684B}

@@ -26,14 +26,43 @@
 namespace Xecrets.Licensing.Abstractions;
 
 /// <summary>
-/// A dependency locator
+/// The license status enumeration, naming the different states a license can be in.
 /// </summary>
-public interface INewLocator
+public enum LicenseStatus
 {
     /// <summary>
-    /// Locate an instance of the give type.
+    /// No, or unknown, state. Should never be used.
     /// </summary>
-    /// <typeparam name="T">The type to find an instance for.</typeparam>
-    /// <returns>An instance of the given type.</returns>
-    T New<T>() where T : class;
+    None = 0,
+
+    /// <summary>
+    /// It's a GPL build and subscription licensing is irrelevant.
+    /// Splash blurb politely and concisely asks to get a subscription.
+    /// </summary>
+    Gpl = 1,
+
+    /// <summary>
+    /// It's a build requiring a license, but there is no subscription license at all.
+    /// Splash blurb is longer and explains the specific situation.
+    /// </summary>
+    Unlicensed = 2,
+
+    /// <summary>
+    /// It's a build requiring a license, but the subscription license is not valid because the license has expired
+    /// Splash blurb is longer and explains the specific situation.
+    /// </summary>
+    Expired = 3,
+
+    /// <summary>
+    /// It's a build requiring a license, and the subscription license is valid for this version.
+    /// Splash blurb politely and concisely thanks for the contribution.
+    /// </summary>
+    Valid = 4,
+
+    /// <summary>
+    /// It's a build requiring a license, but the subscription while not expired is not valid for
+    /// this software.
+    /// Splash blurb is longer and explains the specific situation.
+    /// </summary>
+    Invalid = 5,
 }
