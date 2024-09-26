@@ -17,3 +17,4 @@ namespace, or you can roll your own for your specific needs.
 | Enums | |
 | :--- | :--- |
 | [LicenseStatus](Xecrets.Licensing.Abstractions.LicenseStatus.md 'Xecrets.Licensing.Abstractions.LicenseStatus') | The license status enumeration, naming the different states a license can be in. |
+| [LicenseType](Xecrets.Licensing.Abstractions.LicenseType.md 'Xecrets.Licensing.Abstractions.LicenseType') | Different types of license that may be issued. |

@@ -23,44 +23,33 @@
 
 #endregion Copyright and License
 
-using Xecrets.Licensing.Abstractions;
-
-namespace Xecrets.Licensing.Implementation;
+namespace Xecrets.Licensing.Abstractions;
 
 /// <summary>
-/// The subscription, with an expiration, a licensee and valid for a product
+/// Different types of license that may be issued.
 /// </summary>
-/// <remarks>
-/// Instantiate a subscription
-/// </remarks>
-/// <param name="expirationUtc">The date and time of expiration.</param>
-/// <param name="licensee">The licensee, an arbitrary string representing the holder of the license.</param>
-/// <param name="product">The product that is licensed, an arbitrary string.</param>
-/// <param name="licenseType">The type of license.</param>
-public class LicenseSubscription(DateTime expirationUtc, string licensee, string product, LicenseType licenseType)
+public enum LicenseType
 {
     /// <summary>
-    /// An empty default subscription
+    /// Unknown or no license type
     /// </summary>
-    public static readonly LicenseSubscription Empty = new LicenseSubscription(DateTime.MinValue, string.Empty, string.Empty, LicenseType.None);
-
+    None = 0,
     /// <summary>
-    /// The date and time of expiration.
+    /// A complimentary free premium license. Coded as "free" in the license.
     /// </summary>
-    public DateTime ExpirationUtc { get; } = expirationUtc;
-
+    Free,
     /// <summary>
-    /// The licensee, an arbitrary string representing the holder of the license.
+    /// A free premium trial license, gained without entering any payment details or starting
+    /// a subscription. Coded as "test" in the license.
     /// </summary>
-    public string Licensee { get; } = licensee;
-
+    FreeTest,
     /// <summary>
-    /// The product that is licensed, an arbitrary string.
+    /// A payment premium trial license, a free period before a credit card is charged.
+    /// Coded as "trial" in the license.
     /// </summary>
-    public string Product { get; } = product;
-
+    Trial,
     /// <summary>
-    /// The type of license, free, trial, paid etc.
+    /// A paid premium license. Coded as "paid" in the license.
     /// </summary>
-    public LicenseType LicenseType { get; } = licenseType;
+    Paid,
 }

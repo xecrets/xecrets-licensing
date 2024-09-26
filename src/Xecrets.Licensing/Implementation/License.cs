@@ -111,7 +111,41 @@ public class License(INewLocator newLocator, string issuer, string claim, IEnume
         var handler = new JsonWebTokenHandler();
         JsonWebToken token = (JsonWebToken)handler.ReadToken(signedLicense);
 
-        return new LicenseSubscription(token.ValidTo, token.Audiences.First(), token.GetClaim(claim).Value);
+        LicenseType licenseType = GetLicenseType(token);
+        return new LicenseSubscription(token.ValidTo, token.Audiences.First(), token.GetClaim(claim).Value, licenseType);
+    }
+
+    private static LicenseType GetLicenseType(JsonWebToken token)
+    {
+        string licenseTypeString = token.Claims.FirstOrDefault(c => c.Type == "type.axantum.com")?.Value ?? string.Empty;
+
+        // Heuristic backwards compatibility handling for licenses issued w/o the type claim.
+        if (licenseTypeString.Length == 0)
+        {
+            TimeSpan licenseValidityPeriod = token.ValidTo - token.ValidFrom;
+            if (licenseValidityPeriod.Days < 7)
+            {
+                return LicenseType.FreeTest;
+            }
+            if (licenseValidityPeriod.Days < 21)
+            {
+                return LicenseType.Trial;
+            }
+            if (licenseValidityPeriod.Days < 300)
+            {
+                return LicenseType.Free;
+            }
+            return LicenseType.Paid;
+        }
+
+        return licenseTypeString switch
+        {
+            "free" => LicenseType.Free,
+            "test" => LicenseType.FreeTest,
+            "trial" => LicenseType.Trial,
+            "paid" => LicenseType.Paid,
+            _ => LicenseType.None,
+        };
     }
 
     /// <inheritdoc/>
