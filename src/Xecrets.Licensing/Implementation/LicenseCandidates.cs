@@ -89,6 +89,6 @@ public partial class LicenseCandidates : ILicenseCandidates
 
     private static readonly Regex _jwtRegex = JwtRegex();
 
-    [GeneratedRegex(@"^[-_a-zA-Z0-9]+\.[-_a-zA-Z0-9]+\.[-_a-zA-Z0-9]+$", RegexOptions.Compiled)]
+    [GeneratedRegex(@"^eyJ[-_a-zA-Z0-9]+\.eyJ[-_a-zA-Z0-9]+\.[-_a-zA-Z0-9]+$", RegexOptions.Compiled)]
     private static partial Regex JwtRegex();
 }

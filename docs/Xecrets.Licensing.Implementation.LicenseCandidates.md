@@ -75,7 +75,7 @@ private static System.Text.RegularExpressions.Regex JwtRegex();
 Pattern:<br/>  
   
 ```csharp  
-^[-_a-zA-Z0-9]+\\.[-_a-zA-Z0-9]+\\.[-_a-zA-Z0-9]+$  
+^eyJ[-_a-zA-Z0-9]+\\.eyJ[-_a-zA-Z0-9]+\\.[-_a-zA-Z0-9]+$  
 ```<br/>  
 Options:<br/>  
   
@@ -86,8 +86,9 @@ Explanation:<br/>
   
 ```csharp  
 ○ Match if at the beginning of the string.<br/>  
+○ Match the string "eyJ".<br/>  
 ○ Match a character in the set [-0-9A-Z_a-z] atomically at least once.<br/>  
-○ Match '.'.<br/>  
+○ Match the string ".eyJ".<br/>  
 ○ Match a character in the set [-0-9A-Z_a-z] atomically at least once.<br/>  
 ○ Match '.'.<br/>  
 ○ Match a character in the set [-0-9A-Z_a-z] atomically at least once.<br/>  
