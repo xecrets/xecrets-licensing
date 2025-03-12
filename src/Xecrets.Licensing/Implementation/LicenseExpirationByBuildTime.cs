@@ -1,7 +1,7 @@
 ﻿#region Copyright and License
 
 /*
- * Xecrets Licensing - Copyright © 2022-2024, Svante Seleborg, All Rights Reserved.
+ * Xecrets Licensing - Copyright © 2022-2025, Svante Seleborg, All Rights Reserved.
  *
  * This code file is part of Xecrets Licensing
  *

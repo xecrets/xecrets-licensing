@@ -1,7 +1,7 @@
 ﻿#region Copyright and License
 
 /*
- * Xecrets Licensing - Copyright © 2022-2024, Svante Seleborg, All Rights Reserved.
+ * Xecrets Licensing - Copyright © 2022-2025, Svante Seleborg, All Rights Reserved.
  *
  * This code file is part of Xecrets Licensing
  *
@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("Axantum Software AB")]
 [assembly: AssemblyProduct("Xecrets Licensing")]
-[assembly: AssemblyCopyright("Copyright © 2022-2024 Svante Seleborg, All Rights Reserved")]
+[assembly: AssemblyCopyright("Copyright © 2022-2025 Svante Seleborg, All Rights Reserved")]
 [assembly: AssemblyTrademark("Xecrets is a trademark of Axantum Software AB")]
 [assembly: AssemblyCulture("")]
 
