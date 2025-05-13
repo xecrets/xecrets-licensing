@@ -54,7 +54,7 @@ public static class Extensions
     /// <returns>A string with the local time in current UI culture format.</returns>
     public static string ToLocal(this DateTime utcDateTime)
     {
-        return utcDateTime.ToLocalTime().ToString("G", CultureInfo.CurrentUICulture);
+        return utcDateTime.ToLocalTime().ToString("g", CultureInfo.CurrentUICulture);
     }
 
     /// <summary>
