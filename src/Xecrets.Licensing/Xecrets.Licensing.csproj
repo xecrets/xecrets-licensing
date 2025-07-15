@@ -50,11 +50,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DefaultDocumentation" Version="1.1.0">
+    <PackageReference Include="DefaultDocumentation" Version="1.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.11.0" />
+    <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.12.1" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\icon_128x128.png">
