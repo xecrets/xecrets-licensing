@@ -48,13 +48,13 @@ public static class Extensions
     }
 
     /// <summary>
-    /// Convert a UTC <see cref="DateTime"/> to a local time string in current UI culture format.
+    /// Convert a UTC <see cref="DateTime"/> to a local time string in current culture format.
     /// </summary>
     /// <param name="utcDateTime"></param>
     /// <returns>A string with the local time in current UI culture format.</returns>
     public static string ToLocal(this DateTime utcDateTime)
     {
-        return utcDateTime.ToLocalTime().ToString("g", CultureInfo.CurrentUICulture);
+        return utcDateTime.ToLocalTime().ToString("g", CultureInfo.CurrentCulture);
     }
 
     /// <summary>
