@@ -38,7 +38,7 @@ internal static class NamespaceDoc { }
 /// <summary>
 /// Utility extensions
 /// </summary>
-public static class Extensions
+public static partial class Extensions
 {
     /// <summary>
     /// Convert a culture invariant UTC string to a <see cref="DateTime"/> in UTC.
@@ -90,9 +90,14 @@ public static class Extensions
             format = WindowsFormat();
         }
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) || RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            format = LinuxMacOsFormat();
+            format = MacOsFormat();
+        }
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            format = LinuxFormat();
         }
 
         return dt.ToString(format, CultureInfo.InvariantCulture);
@@ -130,7 +135,48 @@ public static class Extensions
         return DefaultFormat;
     }
 
-    private static string LinuxMacOsFormat()
+    private static string MacOsFormat()
+    {
+        try
+        {
+            IntPtr nsLocaleClass = NativeMethods.objc_getClass("NSLocale");
+
+            IntPtr selCurrentLocale = NativeMethods.sel_registerName("currentLocale");
+            IntPtr currentLocale = NativeMethods.objc_msgSend(nsLocaleClass, selCurrentLocale);
+
+            IntPtr selIdentifier = NativeMethods.sel_registerName("localeIdentifier");
+            IntPtr nsStringPtr = NativeMethods.objc_msgSend(currentLocale, selIdentifier);
+
+            IntPtr selUTF8String = NativeMethods.sel_registerName("UTF8String");
+            IntPtr utf8Ptr = NativeMethods.objc_msgSend(nsStringPtr, selUTF8String);
+
+            string? locale = Marshal.PtrToStringUTF8(utf8Ptr);
+            if (!string.IsNullOrEmpty(locale))
+            {
+                string cultureName = locale.Replace('_', '-').Split('.')[0].Trim();
+                return GetShortDateTimeFormat(cultureName);
+            }
+        }
+        catch
+        {
+        }
+
+        return DefaultFormat;
+    }
+
+    private static partial class NativeMethods
+    {
+        [LibraryImport("/usr/lib/libobjc.A.dylib", StringMarshalling = StringMarshalling.Utf8)]
+        public static unsafe partial IntPtr objc_getClass(string name);
+
+        [LibraryImport("/usr/lib/libobjc.A.dylib", StringMarshalling = StringMarshalling.Utf8)]
+        public static unsafe partial IntPtr sel_registerName(string name);
+
+        [LibraryImport("/usr/lib/libobjc.A.dylib")]
+        public static unsafe partial IntPtr objc_msgSend(IntPtr receiver, IntPtr selector);
+    }
+
+    private static string LinuxFormat()
     {
         string? locale;
 
@@ -145,7 +191,7 @@ public static class Extensions
         }
         if (string.IsNullOrEmpty(locale))
         {
-            locale = "en_US"; // Fallback to a default locale
+            locale = "en_US";
         }
 
         string cultureName = locale.Replace('_', '-').Split('.')[0].Trim();
@@ -375,11 +421,19 @@ public static class Extensions
             return format;
         }
 
-        // Try language only (e.g., "en")
-        int dashIndex = cultureName.IndexOf('-');
-        string langOnly = dashIndex > 0 ? cultureName.Substring(0, dashIndex) : cultureName;
+        // Try region only (e.g., "US" or "GB" etc.)
+        string[] parts = cultureName.Split('-');
+        if (parts.Length > 1)
+        {
+            cultureName = GetMainCultureSpecifierByRegion(parts[^1]);
+            if (ShortDateTimeFormats.TryGetValue(cultureName, out format))
+            {
+                return format;
+            }
+        }
 
-        cultureName = GetMainCultureSpecifier(langOnly);
+        // Try language only (e.g., "en" or "fr" etc.)
+        cultureName = GetMainCultureSpecifierByLanguage(parts[0]);
         if (ShortDateTimeFormats.TryGetValue(cultureName, out format))
         {
             return format;
@@ -387,8 +441,138 @@ public static class Extensions
 
         return DefaultFormat;
     }
+    private static string GetMainCultureSpecifierByRegion(string region)
+    {
+        region = region.Trim().ToUpperInvariant();
 
-    private static string GetMainCultureSpecifier(string language)
+        return region switch
+        {
+            "AE" => "ar-AE",
+            "AF" => "prs-AF",
+            "AL" => "sq-AL",
+            "AM" => "hy-AM",
+            "AR" => "es-AR",
+            "AT" => "de-AT",
+            "AU" => "en-AU",
+            "AZ" => "az-Latn-AZ",
+            "BA" => "bs-Latn-BA",
+            "BD" => "bn-BD",
+            "BE" => "nl-BE",
+            "BG" => "bg-BG",
+            "BH" => "ar-BH",
+            "BN" => "ms-BN",
+            "BO" => "es-BO",
+            "BR" => "pt-BR",
+            "BY" => "be-BY",
+            "CA" => "en-CA",
+            "CH" => "de-CH",
+            "CL" => "es-CL",
+            "CN" => "zh-CN",
+            "CO" => "es-CO",
+            "CR" => "es-CR",
+            "CZ" => "cs-CZ",
+            "DE" => "de-DE",
+            "DK" => "da-DK",
+            "DO" => "es-DO",
+            "DZ" => "ar-DZ",
+            "EC" => "es-EC",
+            "EE" => "et-EE",
+            "EG" => "ar-EG",
+            "ES" => "es-ES",
+            "ET" => "am-ET",
+            "FI" => "fi-FI",
+            "FO" => "fo-FO",
+            "FR" => "fr-FR",
+            "GB" => "en-GB",
+            "GE" => "ka-GE",
+            "GR" => "el-GR",
+            "GT" => "es-GT",
+            "HK" => "zh-HK",
+            "HN" => "es-HN",
+            "HR" => "hr-HR",
+            "HU" => "hu-HU",
+            "ID" => "id-ID",
+            "IE" => "en-IE",
+            "IL" => "he-IL",
+            "IN" => "hi-IN",
+            "IQ" => "ar-IQ",
+            "IR" => "fa-IR",
+            "IS" => "is-IS",
+            "IT" => "it-IT",
+            "JM" => "en-JM",
+            "JO" => "ar-JO",
+            "JP" => "ja-JP",
+            "KE" => "sw-KE",
+            "KG" => "ky-KG",
+            "KH" => "km-KH",
+            "KR" => "ko-KR",
+            "KW" => "ar-KW",
+            "KZ" => "kk-KZ",
+            "LA" => "lo-LA",
+            "LB" => "ar-LB",
+            "LK" => "si-LK",
+            "LT" => "lt-LT",
+            "LU" => "lb-LU",
+            "LV" => "lv-LV",
+            "LY" => "ar-LY",
+            "MA" => "ar-MA",
+            "ME" => "sr-Latn-ME",
+            "MK" => "mk-MK",
+            "MN" => "mn-MN",
+            "MO" => "zh-MO",
+            "MT" => "mt-MT",
+            "MX" => "es-MX",
+            "MY" => "ms-MY",
+            "NG" => "yo-NG",
+            "NL" => "nl-NL",
+            "NO" => "nb-NO",
+            "NP" => "ne-NP",
+            "NZ" => "en-NZ",
+            "OM" => "ar-OM",
+            "PA" => "es-PA",
+            "PE" => "es-PE",
+            "PH" => "fil-PH",
+            "PK" => "ur-PK",
+            "PL" => "pl-PL",
+            "PR" => "es-PR",
+            "PT" => "pt-PT",
+            "PY" => "es-PY",
+            "QA" => "ar-QA",
+            "RO" => "ro-RO",
+            "RS" => "sr-Cyrl-RS",
+            "RU" => "ru-RU",
+            "RW" => "rw-RW",
+            "SA" => "ar-SA",
+            "SD" => "ar-SD",
+            "SE" => "sv-SE",
+            "SG" => "zh-SG",
+            "SI" => "sl-SI",
+            "SK" => "sk-SK",
+            "SN" => "wo-SN",
+            "SV" => "es-SV",
+            "SY" => "ar-SY",
+            "TH" => "th-TH",
+            "TN" => "ar-TN",
+            "TR" => "tr-TR",
+            "TT" => "en-TT",
+            "TW" => "zh-TW",
+            "TZ" => "sw-TZ",
+            "UA" => "uk-UA",
+            "UG" => "en-UG",
+            "US" => "en-US",
+            "UY" => "es-UY",
+            "UZ" => "uz-Latn-UZ",
+            "VE" => "es-VE",
+            "VN" => "vi-VN",
+            "YE" => "ar-YE",
+            "ZA" => "af-ZA",
+            "ZM" => "en-ZM",
+            "ZW" => "en-ZW",
+            _ => "en-US" // fallback
+        };
+    }
+
+    private static string GetMainCultureSpecifierByLanguage(string language)
     {
         language = language.Trim().ToLowerInvariant();
 
@@ -498,7 +682,7 @@ public static class Extensions
             "yo" => "yo-NG",
             "zh" => "zh-CN",
             "zu" => "zu-ZA",
-            _ => "en-US" // fallback
+            _ => "en-US"
         };
     }
 }
