@@ -35,7 +35,7 @@ internal static class NamespaceDoc { }
 /// <summary>
 /// Utility extensions
 /// </summary>
-public static partial class Extensions
+public static class Extensions
 {
     /// <summary>
     /// Convert a culture invariant UTC string to a <see cref="DateTime"/> in UTC.
