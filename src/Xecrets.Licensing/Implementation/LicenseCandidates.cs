@@ -71,7 +71,8 @@ public partial class LicenseCandidates : ILicenseCandidates
             return false;
         }
 
-        if (IsCandidate(fileText))
+        string candidate = ExtractCandidate(fileText);
+        if (candidate.Length > 0)
         {
             candidateLicenseToken = fileText;
             return true;
@@ -81,14 +82,27 @@ public partial class LicenseCandidates : ILicenseCandidates
     }
 
     /// <inheritdoc/>
-    public bool IsCandidate(string? candidate)
+    public string ExtractCandidate(string? candidate)
     {
-        candidate = candidate?.Trim().ReplaceLineEndings(string.Empty);
-        return !string.IsNullOrEmpty(candidate) && candidate.Length < 1024 && _jwtRegex.IsMatch(candidate);
+        string compact = WhiteSpaceRegex().Replace(candidate ?? string.Empty, string.Empty);
+
+        Match match = JwtEs256Regex().Match(compact);
+        if (!match.Success)
+        {
+            return string.Empty;
+        }
+
+        return match.Value;
     }
 
-    private static readonly Regex _jwtRegex = JwtRegex();
+    [GeneratedRegex(@"\s+")]
+    private static partial Regex WhiteSpaceRegex();
 
-    [GeneratedRegex(@"^eyJ[-_a-zA-Z0-9]+\.eyJ[-_a-zA-Z0-9]+\.[-_a-zA-Z0-9]+$", RegexOptions.Compiled)]
-    private static partial Regex JwtRegex();
+    /// <summary>
+    /// A regular expression to match a JWT ES256 token. The first part is the header, the second part is the payload,
+    /// the third part is the signature. The first two parts have reasonable limits to their lengths set, while the
+    /// signature has an exact length set in order to avoid matching trailing characters.
+    /// </summary>
+    [GeneratedRegex(@"(eyJ[A-Za-z0-9_-]{25,100})\.(eyJ[A-Za-z0-9_-]{50,1000})\.([A-Za-z0-9_-]{86})")]
+    private static partial Regex JwtEs256Regex();
 }

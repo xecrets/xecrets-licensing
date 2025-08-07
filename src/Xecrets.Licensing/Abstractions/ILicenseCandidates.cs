@@ -47,9 +47,9 @@ public interface ILicenseCandidates
     bool TryCandidateFile(string file, out string candidateLicenseToken);
 
     /// <summary>
-    /// Test if a provided string is a license candidate.
+    /// Clean and extract a license token from a candidate string.
     /// </summary>
-    /// <param name="candidateLicenseToken">The candidate string to test.</param>
-    /// <returns><see langword="true"/> if it is a license candidate, otherwise <see langword="false"/>.</returns>
-    bool IsCandidate(string? candidateLicenseToken);
+    /// <param name="candidate"></param>
+    /// <returns>A probably clean license token string, or an empty string if it doesn't match</returns>
+    string ExtractCandidate(string? candidate);
 }

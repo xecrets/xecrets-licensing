@@ -61,7 +61,10 @@ public class License(INewLocator newLocator, string issuer, string claim, IEnume
     /// <inheritdoc/>
     public async Task<string> GetBestValidLicenseTokenAsync(IEnumerable<string> licenseTokenCandidates)
     {
-        licenseTokenCandidates = licenseTokenCandidates.Where(c => newLocator.New<ILicenseCandidates>().IsCandidate(c));
+        licenseTokenCandidates = licenseTokenCandidates
+            .Select(c => newLocator.New<ILicenseCandidates>().ExtractCandidate(c))
+            .Where(c => c.Length > 0);
+
         if (!licenseTokenCandidates.Any())
         {
             return string.Empty;
@@ -194,8 +197,7 @@ public class License(INewLocator newLocator, string issuer, string claim, IEnume
 
         foreach (string tokenCandidate in licenseTokenCandidates)
         {
-            string trimmedTokenCandidate = tokenCandidate.Trim().ReplaceLineEndings(string.Empty);
-            TokenValidationResult result = await handler.ValidateTokenAsync(trimmedTokenCandidate, new TokenValidationParameters
+            TokenValidationResult result = await handler.ValidateTokenAsync(tokenCandidate, new TokenValidationParameters
             {
                 ValidateAudience = false,
                 ValidIssuer = issuer,
@@ -206,7 +208,7 @@ public class License(INewLocator newLocator, string issuer, string claim, IEnume
 
             if (result.IsValid)
             {
-                validLicenseTokens.Add(trimmedTokenCandidate);
+                validLicenseTokens.Add(tokenCandidate);
             }
         }
     }
