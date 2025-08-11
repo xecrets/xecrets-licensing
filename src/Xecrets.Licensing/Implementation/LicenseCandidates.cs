@@ -103,6 +103,6 @@ public partial class LicenseCandidates : ILicenseCandidates
     /// the third part is the signature. The first two parts have reasonable limits to their lengths set, while the
     /// signature has an exact length set in order to avoid matching trailing characters.
     /// </summary>
-    [GeneratedRegex(@"(eyJ[A-Za-z0-9_-]{25,100})\.(eyJ[A-Za-z0-9_-]{50,1000})\.([A-Za-z0-9_-]{86})")]
+    [GeneratedRegex(@"(eyJ[A-Za-z0-9_-]{5,50})\.(eyJ[A-Za-z0-9_-]{50,1000})\.([A-Za-z0-9_-]{86})")]
     private static partial Regex JwtEs256Regex();
 }
