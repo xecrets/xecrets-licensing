@@ -1,0 +1,28 @@
+<Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path="../.editorconfig" />
+    <File Path="../.gitignore" />
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/SolutionItems/docs/">
+    <File Path="../docs/index.md" />
+    <File Path="../docs/Xecrets.Licensing.Abstractions.IBuildUtc.md" />
+    <File Path="../docs/Xecrets.Licensing.Abstractions.ILicense.md" />
+    <File Path="../docs/Xecrets.Licensing.Abstractions.ILicenseCandidates.md" />
+    <File Path="../docs/Xecrets.Licensing.Abstractions.ILicenseExpiration.md" />
+    <File Path="../docs/Xecrets.Licensing.Abstractions.INewLocator.md" />
+    <File Path="../docs/Xecrets.Licensing.Abstractions.LicenseStatus.md" />
+    <File Path="../docs/Xecrets.Licensing.Abstractions.md" />
+    <File Path="../docs/Xecrets.Licensing.Extensions.md" />
+    <File Path="../docs/Xecrets.Licensing.Implementation.BuildUtc.md" />
+    <File Path="../docs/Xecrets.Licensing.Implementation.License.md" />
+    <File Path="../docs/Xecrets.Licensing.Implementation.LicenseBlurb.md" />
+    <File Path="../docs/Xecrets.Licensing.Implementation.LicenseCandidates.md" />
+    <File Path="../docs/Xecrets.Licensing.Implementation.LicenseExpirationByBuildTime.md" />
+    <File Path="../docs/Xecrets.Licensing.Implementation.LicenseExpirationByCurrentTime.md" />
+    <File Path="../docs/Xecrets.Licensing.Implementation.LicenseSubscription.md" />
+    <File Path="../docs/Xecrets.Licensing.Implementation.md" />
+    <File Path="../docs/Xecrets.Licensing.md" />
+  </Folder>
+  <Project Path="Xecrets.Licensing/Xecrets.Licensing.csproj" />
+</Solution>
